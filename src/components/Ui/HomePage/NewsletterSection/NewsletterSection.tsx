@@ -18,7 +18,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-brand-900 py-16 md:py-20">
+    <section className="relative overflow-hidden bg-brand-900  py-16 md:py-20">
       <div className="absolute inset-0 opacity-25">
         <Image
           src="/images/yachts/yacht-sharlou.jpg"
@@ -27,7 +27,8 @@ const NewsletterSection = () => {
           className=""
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-900/95 to-brand-900/70" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#6AB3FA]/20 via-[#6AB3FA]/10 to-[#6AB3FA]/10" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#6AB3FA]/30 via-transparent to-transparent" />
 
       <div className="container relative">
         <div className="max-w-xl">

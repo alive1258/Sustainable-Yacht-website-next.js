@@ -55,7 +55,7 @@ const FaqSection = () => {
         </div>
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 lg:items-center">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-auto lg:h-full lg:min-h-[480px]">
+          <div className="relative aspect-4/3 overflow-hidden rounded-2xl lg:aspect-auto lg:h-full lg:min-h-[480px]">
             <Image
               src="/images/experiences/exp-dubai-tour.avif"
               alt="Guests relaxing aboard an Eco Yachts charter"
