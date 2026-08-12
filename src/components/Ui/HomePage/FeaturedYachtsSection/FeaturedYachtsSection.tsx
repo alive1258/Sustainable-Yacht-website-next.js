@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Ruler, Users } from "lucide-react";
 import { getYachtSummaries } from "@/src/utils/data/yachts";
 
-const YACHTS = getYachtSummaries().slice(0, 3);
+const YACHTS = getYachtSummaries().slice(0, 6);
 
 const FeaturedYachtsSection = () => {
   return (
@@ -40,7 +40,7 @@ const FeaturedYachtsSection = () => {
                   alt={yacht.name}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className=" transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-6">

@@ -72,7 +72,7 @@ export default async function YachtDetailPage({ params }: PageProps) {
 
   const otherYachts = YACHT_FLEET.filter((y) => y.slug !== yacht.slug).slice(
     0,
-    3
+    3,
   );
 
   return (
@@ -126,10 +126,7 @@ export default async function YachtDetailPage({ params }: PageProps) {
                 </h2>
                 <div className="mt-5 space-y-4">
                   {yacht.description.map((paragraph, i) => (
-                    <p
-                      key={i}
-                      className="text-brand-900/70 leading-relaxed"
-                    >
+                    <p key={i} className="text-brand-900/70 leading-relaxed">
                       {paragraph}
                     </p>
                   ))}
@@ -168,7 +165,7 @@ export default async function YachtDetailPage({ params }: PageProps) {
                       key={`${src}-${i}`}
                       className={`relative overflow-hidden rounded-xl ${
                         i === 0
-                          ? "col-span-2 aspect-[16/10] sm:col-span-3"
+                          ? "col-span-2 aspect-16/10 sm:col-span-3"
                           : "aspect-square"
                       }`}
                     >
@@ -177,7 +174,7 @@ export default async function YachtDetailPage({ params }: PageProps) {
                         alt={`${yacht.name} — gallery photo ${i + 1}`}
                         fill
                         sizes="(min-width: 640px) 33vw, 50vw"
-                        className="object-cover transition-transform duration-500 hover:scale-105"
+                        className=" transition-transform duration-500 hover:scale-105"
                       />
                     </div>
                   ))}
@@ -199,7 +196,7 @@ export default async function YachtDetailPage({ params }: PageProps) {
                     <SpecRow
                       label="Staterooms"
                       value={String(
-                        yacht.specifications.accommodation.staterooms
+                        yacht.specifications.accommodation.staterooms,
                       )}
                     />
                     <SpecRow
@@ -229,15 +226,11 @@ export default async function YachtDetailPage({ params }: PageProps) {
                     />
                     <SpecRow
                       label="Exterior Designer"
-                      value={
-                        yacht.specifications.construction.exteriorDesigner
-                      }
+                      value={yacht.specifications.construction.exteriorDesigner}
                     />
                     <SpecRow
                       label="Interior Designer"
-                      value={
-                        yacht.specifications.construction.interiorDesigner
-                      }
+                      value={yacht.specifications.construction.interiorDesigner}
                     />
                   </SpecGroup>
 
@@ -333,17 +326,13 @@ export default async function YachtDetailPage({ params }: PageProps) {
                       </p>
                       <div className="mt-4 space-y-2 border-t border-brand-900/10 pt-4">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-brand-900/60">
-                            Low Season
-                          </span>
+                          <span className="text-brand-900/60">Low Season</span>
                           <span className="font-bold text-brand-900">
                             {rate.lowSeason}
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-brand-900/60">
-                            High Season
-                          </span>
+                          <span className="text-brand-900/60">High Season</span>
                           <span className="font-bold text-brand-900">
                             {rate.highSeason}
                           </span>
@@ -370,8 +359,8 @@ export default async function YachtDetailPage({ params }: PageProps) {
                     </span>
                   </div>
                   <p className="mt-2 text-sm text-brand-900/60">
-                    Rates vary by season and itinerary. Speak with our team
-                    for a tailored quote.
+                    Rates vary by season and itinerary. Speak with our team for
+                    a tailored quote.
                   </p>
                   <Link
                     href={`/contact?yacht=${yacht.slug}`}
@@ -441,13 +430,13 @@ export default async function YachtDetailPage({ params }: PageProps) {
                   href={`/yachts/${other.slug}`}
                   className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm hover:shadow-lg transition-shadow"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden">
                     <Image
                       src={other.heroImage}
                       alt={other.name}
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className=" transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -517,9 +506,7 @@ function SpecRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-start justify-between gap-4 py-2.5 text-sm">
       <span className="text-brand-900/60">{label}</span>
-      <span className="text-right font-semibold text-brand-900">
-        {value}
-      </span>
+      <span className="text-right font-semibold text-brand-900">{value}</span>
     </div>
   );
 }

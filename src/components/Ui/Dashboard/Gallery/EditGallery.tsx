@@ -172,14 +172,20 @@ const EditGallery: React.FC<EditGalleryProps> = ({ id }) => {
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
 
           {/* Description */}
           <div className="col-span-full flex flex-col gap-1">
-            <label htmlFor="description" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="description"
+              className="text-sm font-medium text-gray-700"
+            >
               Description
               <span className="text-red-500 ml-0.5">*</span>
             </label>
@@ -216,7 +222,7 @@ const EditGallery: React.FC<EditGalleryProps> = ({ id }) => {
                       src={src}
                       alt={`Existing image ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className=""
                       unoptimized
                     />
                   </div>
@@ -232,8 +238,8 @@ const EditGallery: React.FC<EditGalleryProps> = ({ id }) => {
             </label>
             <p className="text-xs text-gray-500 mb-3">
               Selecting new images here replaces{" "}
-              <span className="font-medium">all</span> current images.
-              Leave empty to keep the existing ones.
+              <span className="font-medium">all</span> current images. Leave
+              empty to keep the existing ones.
             </p>
 
             {newPreviews.length > 0 && (
@@ -247,7 +253,7 @@ const EditGallery: React.FC<EditGalleryProps> = ({ id }) => {
                       src={src}
                       alt={`New preview ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className=""
                     />
                     <button
                       type="button"

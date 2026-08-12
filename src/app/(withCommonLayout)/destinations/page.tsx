@@ -10,20 +10,76 @@ export const metadata: Metadata = {
 };
 
 const DESTINATIONS = [
-  { name: "Greek Islands", description: "Whitewashed villages and crystal Aegean coves.", image: "/images/destinations/santorini.jpg" },
-  { name: "Maldives", description: "Overwater calm above protected coral reefs.", image: "/images/destinations/maldives.jpg" },
-  { name: "Phuket, Thailand", description: "Limestone cliffs and warm Andaman waters.", image: "/images/destinations/phuket.jpg" },
-  { name: "The Bahamas", description: "Shallow turquoise banks and quiet cays.", image: "/images/destinations/bahamas.jpg" },
-  { name: "Brač Island, Croatia", description: "The Adriatic's famous shifting sandbar beach.", image: "/images/destinations/dest-40.jpg" },
-  { name: "Corfu, Greece", description: "Emerald cliffs framing hidden turquoise coves.", image: "/images/destinations/dest-41.jpg" },
-  { name: "Kotor Bay, Montenegro", description: "A fjord-like bay ringed by dramatic peaks.", image: "/images/destinations/dest-42.jpg" },
-  { name: "Saint Lucia, Caribbean", description: "Twin volcanic peaks rising straight from the sea.", image: "/images/destinations/dest-43.jpg" },
-  { name: "Kornati Islands, Croatia", description: "Pine-covered coves built for quiet anchorages.", image: "/images/destinations/dest-44.jpg" },
-  { name: "Amalfi Coast, Italy", description: "Cliffside towns stacked above the Tyrrhenian Sea.", image: "/images/destinations/dest-45.jpg" },
-  { name: "Dubai Marina, UAE", description: "Skyline glamour with desert-meets-sea style.", image: "/images/destinations/dest-46.jpg" },
-  { name: "Railay Beach, Thailand", description: "Powder-white sand under towering limestone karsts.", image: "/images/destinations/dest-47.jpg" },
-  { name: "Krabi Coast, Thailand", description: "Longtail boats drifting through jade-green water.", image: "/images/destinations/dest-48.jpg" },
-  { name: "Krabi at Sunset, Thailand", description: "Golden light over the Andaman's karst islands.", image: "/images/destinations/dest-49.jpg" },
+  {
+    name: "Greek Islands",
+    description: "Whitewashed villages and crystal Aegean coves.",
+    image: "/images/destinations/santorini.jpg",
+  },
+  {
+    name: "Maldives",
+    description: "Overwater calm above protected coral reefs.",
+    image: "/images/destinations/maldives.jpg",
+  },
+  {
+    name: "Phuket, Thailand",
+    description: "Limestone cliffs and warm Andaman waters.",
+    image: "/images/destinations/phuket.jpg",
+  },
+  {
+    name: "The Bahamas",
+    description: "Shallow turquoise banks and quiet cays.",
+    image: "/images/destinations/bahamas.jpg",
+  },
+  {
+    name: "Brač Island, Croatia",
+    description: "The Adriatic's famous shifting sandbar beach.",
+    image: "/images/destinations/dest-40.jpg",
+  },
+  {
+    name: "Corfu, Greece",
+    description: "Emerald cliffs framing hidden turquoise coves.",
+    image: "/images/destinations/dest-41.jpg",
+  },
+  {
+    name: "Kotor Bay, Montenegro",
+    description: "A fjord-like bay ringed by dramatic peaks.",
+    image: "/images/destinations/dest-42.jpg",
+  },
+  {
+    name: "Saint Lucia, Caribbean",
+    description: "Twin volcanic peaks rising straight from the sea.",
+    image: "/images/destinations/dest-43.jpg",
+  },
+  {
+    name: "Kornati Islands, Croatia",
+    description: "Pine-covered coves built for quiet anchorages.",
+    image: "/images/destinations/dest-44.jpg",
+  },
+  {
+    name: "Amalfi Coast, Italy",
+    description: "Cliffside towns stacked above the Tyrrhenian Sea.",
+    image: "/images/destinations/dest-45.jpg",
+  },
+  {
+    name: "Dubai Marina, UAE",
+    description: "Skyline glamour with desert-meets-sea style.",
+    image: "/images/destinations/dest-46.jpg",
+  },
+  {
+    name: "Railay Beach, Thailand",
+    description: "Powder-white sand under towering limestone karsts.",
+    image: "/images/destinations/dest-47.jpg",
+  },
+  {
+    name: "Krabi Coast, Thailand",
+    description: "Longtail boats drifting through jade-green water.",
+    image: "/images/destinations/dest-48.jpg",
+  },
+  {
+    name: "Krabi at Sunset, Thailand",
+    description: "Golden light over the Andaman's karst islands.",
+    image: "/images/destinations/dest-49.jpg",
+  },
 ];
 
 export default function DestinationsPage() {
@@ -51,7 +107,7 @@ export default function DestinationsPage() {
                     alt={destination.name}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className=" transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-6">

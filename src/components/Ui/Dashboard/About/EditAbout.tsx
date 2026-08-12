@@ -113,7 +113,11 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
     if (!infoIcon.trim() || !infoLabel.trim() || !infoValue.trim()) return;
     setInfo((prev) => [
       ...prev,
-      { icon: infoIcon.trim(), label: infoLabel.trim(), value: infoValue.trim() },
+      {
+        icon: infoIcon.trim(),
+        label: infoLabel.trim(),
+        value: infoValue.trim(),
+      },
     ]);
     setInfoIcon("");
     setInfoLabel("");
@@ -134,7 +138,8 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
       formData.append("is_active", String(values.is_active));
 
       if (values.eyebrow) formData.append("eyebrow", values.eyebrow);
-      if (values.registration) formData.append("registration", values.registration);
+      if (values.registration)
+        formData.append("registration", values.registration);
 
       if (
         values.position !== undefined &&
@@ -223,7 +228,9 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
           <Input
             label="Specialty"
             text="specialty"
-            register={register("specialty", { required: "Specialty is required" })}
+            register={register("specialty", {
+              required: "Specialty is required",
+            })}
             errors={errors}
           />
 
@@ -254,7 +261,10 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
@@ -310,7 +320,8 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
               Info Grid (Optional)
             </label>
             <p className="text-xs text-gray-500">
-              Icon name uses Lucide icon names, e.g. &quot;GraduationCap&quot;, &quot;Briefcase&quot;, &quot;Languages&quot;.
+              Icon name uses Lucide icon names, e.g. &quot;GraduationCap&quot;,
+              &quot;Briefcase&quot;, &quot;Languages&quot;.
             </p>
 
             {info.length > 0 && (
@@ -322,7 +333,9 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
                   >
                     <div className="flex-1 min-w-0 grid grid-cols-3 gap-2 text-sm">
                       <span className="text-gray-500">{item.icon}</span>
-                      <span className="font-medium text-gray-800">{item.label}</span>
+                      <span className="font-medium text-gray-800">
+                        {item.label}
+                      </span>
                       <span className="text-gray-600">{item.value}</span>
                     </div>
                     <button
@@ -383,7 +396,7 @@ const EditAbout: React.FC<EditAboutProps> = ({ id }) => {
                     src={imagePreview}
                     alt="About Photo Preview"
                     fill
-                    className="object-cover"
+                    className=""
                     unoptimized
                   />
                 </div>

@@ -24,6 +24,14 @@ const QUICK_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
+const COMPANY_LINKS = [
+  { label: "About Us", href: "/about" },
+  { label: "Sustainability", href: "/about/sustainability" },
+  { label: "Join the Team", href: "/about/careers" },
+  { label: "News & Events", href: "/about/news/latest" },
+  { label: "Crew Services", href: "/crew-services" },
+];
+
 const SUPPORT_LINKS = [
   { label: "Experiences", href: "/#experiences" },
   { label: "Sailing Insights", href: "/#insights" },
@@ -98,13 +106,31 @@ const Footer = () => {
           </div>
 
           {/* LINK COLUMNS */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div className="lg:col-span-8 grid grid-cols-2 gap-8 lg:grid-cols-4">
             <div className="space-y-5">
               <h3 className="text-sm font-bold uppercase tracking-widest text-white">
                 Quick Links
               </h3>
               <ul className="space-y-3">
                 {QUICK_LINKS.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="space-y-5">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
+                Company
+              </h3>
+              <ul className="space-y-3">
+                {COMPANY_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
@@ -135,7 +161,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="space-y-5 col-span-2 sm:col-span-1">
+            <div className="space-y-5">
               <h3 className="text-sm font-bold uppercase tracking-widest text-white">
                 Contact Us
               </h3>

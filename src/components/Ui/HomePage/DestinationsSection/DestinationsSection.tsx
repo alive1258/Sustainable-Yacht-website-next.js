@@ -59,13 +59,11 @@ const DestinationsSection = () => {
                   alt={destination.name}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className=" transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-5">
-                <h3 className="font-bold text-brand-900">
-                  {destination.name}
-                </h3>
+                <h3 className="font-bold text-brand-900">{destination.name}</h3>
                 <p className="mt-1.5 text-sm text-brand-900/60 leading-relaxed">
                   {destination.description}
                 </p>

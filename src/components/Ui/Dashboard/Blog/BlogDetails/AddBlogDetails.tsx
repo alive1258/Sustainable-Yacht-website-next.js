@@ -384,7 +384,7 @@ const AddBlogDetails: React.FC<AddBlogDetailsProps> = ({ defaultBlogId }) => {
                   src={imagePreview}
                   alt="Selected section image preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             )}

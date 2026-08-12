@@ -62,7 +62,7 @@ export default function YachtsPage() {
                     alt={yacht.name}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className=" transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-6">
@@ -123,7 +123,7 @@ export default function YachtsPage() {
                     alt={item.name}
                     fill
                     sizes="(min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
+                    className=""
                   />
                 </div>
                 <div className="p-6">
@@ -155,7 +155,7 @@ export default function YachtsPage() {
                   alt="Life aboard an Eco Yachts charter"
                   fill
                   sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  className=" transition-transform duration-500 hover:scale-105"
                 />
               </div>
             ))}
@@ -169,8 +169,8 @@ export default function YachtsPage() {
             Not Sure Which Yacht Fits?
           </h2>
           <p className="max-w-lg text-brand-100/80">
-            Tell us your group size, destination, and dates — we&apos;ll
-            match you with the right boat.
+            Tell us your group size, destination, and dates — we&apos;ll match
+            you with the right boat.
           </p>
           <a
             href="/contact"

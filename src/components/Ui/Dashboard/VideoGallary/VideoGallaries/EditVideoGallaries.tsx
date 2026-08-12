@@ -224,7 +224,7 @@ const EditVideoGallaries: React.FC<EditVideoGallariesProps> = ({ id }) => {
                     src={thumbnailPreview}
                     alt="Thumbnail Preview"
                     fill
-                    className="object-cover"
+                    className=""
                     unoptimized
                   />
                 </div>

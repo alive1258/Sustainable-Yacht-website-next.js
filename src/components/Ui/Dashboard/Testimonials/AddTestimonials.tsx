@@ -80,7 +80,8 @@ const AddTestimonials = () => {
       formData.append("rating", String(values.rating));
       formData.append("is_active", String(values.is_active));
 
-      if (values.designation) formData.append("designation", values.designation);
+      if (values.designation)
+        formData.append("designation", values.designation);
       if (values.video_url) formData.append("video_url", values.video_url);
 
       if (
@@ -209,7 +210,10 @@ const AddTestimonials = () => {
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
@@ -240,7 +244,7 @@ const AddTestimonials = () => {
                   src={imagePreview}
                   alt="Patient Photo Preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             )}

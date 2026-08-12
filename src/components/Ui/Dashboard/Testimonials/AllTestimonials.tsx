@@ -169,7 +169,7 @@ const AllTestimonials: React.FC = () => {
                         alt={testimonial.name}
                         width={40}
                         height={40}
-                        className="h-10 w-10 rounded-full border object-cover"
+                        className="h-10 w-10 rounded-full border "
                       />
                     ) : (
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-800">

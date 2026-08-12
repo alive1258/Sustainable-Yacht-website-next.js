@@ -159,7 +159,7 @@ const AllProductCategory: React.FC = () => {
                         alt={category.name}
                         width={56}
                         height={56}
-                        className="h-10 w-10 rounded-lg border object-cover"
+                        className="h-10 w-10 rounded-lg border "
                       />
                     ) : (
                       <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-gray-100 text-xs text-gray-400">

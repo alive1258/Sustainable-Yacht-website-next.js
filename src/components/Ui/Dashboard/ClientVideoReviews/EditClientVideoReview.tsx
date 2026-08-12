@@ -106,7 +106,8 @@ const EditClientVideoReview: React.FC<EditClientVideoReviewProps> = ({
       formData.append("video_url", values.video_url);
       formData.append("is_active", String(values.is_active));
 
-      if (values.designation) formData.append("designation", values.designation);
+      if (values.designation)
+        formData.append("designation", values.designation);
 
       if (
         values.position !== undefined &&
@@ -241,7 +242,10 @@ const EditClientVideoReview: React.FC<EditClientVideoReviewProps> = ({
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
@@ -272,7 +276,7 @@ const EditClientVideoReview: React.FC<EditClientVideoReviewProps> = ({
                     src={imagePreview}
                     alt="Client Photo Preview"
                     fill
-                    className="object-cover"
+                    className=""
                     unoptimized
                   />
                 </div>

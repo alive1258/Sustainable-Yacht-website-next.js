@@ -82,7 +82,7 @@ const ProductGalleryUploader: React.FC<ProductGalleryUploaderProps> = ({
                   src={img}
                   alt="Existing gallery image"
                   fill
-                  className="object-cover"
+                  className=""
                   unoptimized
                 />
               </div>
@@ -102,7 +102,7 @@ const ProductGalleryUploader: React.FC<ProductGalleryUploaderProps> = ({
                 src={src}
                 alt={`Selected gallery image ${index + 1}`}
                 fill
-                className="object-cover"
+                className=""
               />
               <button
                 type="button"

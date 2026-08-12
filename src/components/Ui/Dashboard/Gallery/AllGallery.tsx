@@ -167,7 +167,7 @@ const AllGallery: React.FC = () => {
                           alt={item.title}
                           width={40}
                           height={40}
-                          className="h-10 w-10 rounded-lg border object-cover"
+                          className="h-10 w-10 rounded-lg border "
                         />
                         {item.images.length > 1 && (
                           <span className="absolute -bottom-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-emerald-600 px-1 text-[10px] font-semibold text-white border border-white">
