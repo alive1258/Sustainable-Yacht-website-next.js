@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 
 // TODO: confirm final policy wording (deposit %, cancellation window) with
@@ -53,35 +54,47 @@ const FaqSection = () => {
           </h2>
         </div>
 
-        <div className="mx-auto max-w-2xl divide-y divide-brand-900/10 rounded-2xl border border-brand-900/10">
-          {FAQS.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div key={faq.question}>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
-                >
-                  <span className="font-semibold text-brand-900">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    size={18}
-                    className={`shrink-0 text-brand-600 transition-transform ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {isOpen && (
-                  <p className="px-6 pb-5 text-sm text-brand-900/70 leading-relaxed">
-                    {faq.answer}
-                  </p>
-                )}
-              </div>
-            );
-          })}
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 lg:items-center">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl lg:aspect-auto lg:h-full lg:min-h-[480px]">
+            <Image
+              src="/images/experiences/exp-dubai-tour.avif"
+              alt="Guests relaxing aboard an Eco Yachts charter"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+
+          <div className="divide-y divide-brand-900/10 rounded-2xl border border-brand-900/10">
+            {FAQS.map((faq, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div key={faq.question}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                  >
+                    <span className="font-semibold text-brand-900">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      size={18}
+                      className={`shrink-0 text-brand-600 transition-transform ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <p className="px-6 pb-5 text-sm text-brand-900/70 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

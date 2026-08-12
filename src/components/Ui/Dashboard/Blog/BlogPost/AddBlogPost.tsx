@@ -260,7 +260,7 @@ const AddBlogPost = () => {
                   src={imagePreview}
                   alt="Selected Cover Preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             )}

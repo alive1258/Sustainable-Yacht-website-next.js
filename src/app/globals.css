@@ -142,3 +142,52 @@ body {
 .animate-marquee {
   animation: marquee 75s linear infinite;
 }
+
+/* ================= TESTIMONIALS MARQUEE ================= */
+@keyframes testimonial-scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes testimonial-scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-testimonial-left {
+  animation: testimonial-scroll-left 55s linear infinite;
+}
+
+.animate-testimonial-right {
+  animation: testimonial-scroll-right 55s linear infinite;
+}
+
+.animate-testimonial-left:hover,
+.animate-testimonial-right:hover {
+  animation-play-state: paused;
+}
+
+.testimonial-fade {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}

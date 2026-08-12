@@ -178,7 +178,7 @@ const AllBlogPost: React.FC = () => {
                         alt={blog.title}
                         width={56}
                         height={56}
-                        className="h-10 w-10 rounded-lg border object-cover"
+                        className="h-10 w-10 rounded-lg border "
                       />
                     ) : (
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-[10px] text-gray-400">

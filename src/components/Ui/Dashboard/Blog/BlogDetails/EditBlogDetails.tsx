@@ -381,7 +381,7 @@ const EditBlogDetails: React.FC<EditBlogDetailsProps> = ({ id }) => {
                   src={previewImage}
                   alt="Section image preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             )}

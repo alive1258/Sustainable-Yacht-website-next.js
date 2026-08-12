@@ -193,7 +193,7 @@ const AddVideoGallaries: React.FC = () => {
                     src={imagePreview}
                     alt="Thumbnail Preview"
                     fill
-                    className="object-cover"
+                    className=""
                   />
                 </div>
               ) : (

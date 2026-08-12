@@ -418,7 +418,7 @@ const EditProducts: React.FC<EditProductsProps> = ({ id }) => {
                   alt="Product Thumbnail"
                   width={180}
                   height={180}
-                  className="h-40 w-40 rounded-lg border object-cover"
+                  className="h-40 w-40 rounded-lg border "
                   unoptimized
                 />
               </div>

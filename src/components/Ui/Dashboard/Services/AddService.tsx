@@ -140,14 +140,20 @@ const AddService = () => {
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
 
           {/* Description */}
           <div className="col-span-full flex flex-col gap-1">
-            <label htmlFor="description" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="description"
+              className="text-sm font-medium text-gray-700"
+            >
               Description
               <span className="text-red-500 ml-0.5">*</span>
             </label>
@@ -181,7 +187,7 @@ const AddService = () => {
                   src={imagePreview}
                   alt="Service Image Preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             ) : (

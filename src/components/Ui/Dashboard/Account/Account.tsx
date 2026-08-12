@@ -111,7 +111,7 @@ const Sidebar: React.FC<{
               alt={user.name || "User"}
               width={80}
               height={80}
-              className="object-cover"
+              className=""
             />
           ) : (
             <span className="text-3xl font-bold text-emerald-600">
@@ -598,7 +598,7 @@ const WishlistTab: React.FC = () => {
                     src={item.product.images[0]}
                     alt={item.product.name}
                     fill
-                    className="object-cover"
+                    className=""
                   />
                 ) : (
                   <div className="flex items-center justify-center w-full h-full">

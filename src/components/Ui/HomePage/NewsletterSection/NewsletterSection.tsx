@@ -24,7 +24,7 @@ const NewsletterSection = () => {
           src="/images/yachts/yacht-sharlou.jpg"
           alt=""
           fill
-          className="object-cover"
+          className=""
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-brand-900 via-brand-900/95 to-brand-900/70" />

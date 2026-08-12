@@ -172,7 +172,7 @@ const AllClientVideoReviews: React.FC = () => {
                         alt={review.name}
                         width={40}
                         height={40}
-                        className="h-10 w-10 rounded-full border object-cover"
+                        className="h-10 w-10 rounded-full border "
                       />
                     ) : (
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-800">
@@ -191,7 +191,10 @@ const AllClientVideoReviews: React.FC = () => {
 
                   <td className="px-5 py-3 text-center">
                     <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
-                      <Star size={12} className="fill-amber-400 text-amber-400" />
+                      <Star
+                        size={12}
+                        className="fill-amber-400 text-amber-400"
+                      />
                       <span>{review.rating}</span>
                     </div>
                   </td>

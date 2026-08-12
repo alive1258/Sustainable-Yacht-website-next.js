@@ -98,7 +98,11 @@ const AddHero = () => {
     if (!statIcon.trim() || !statValue.trim() || !statLabel.trim()) return;
     setStats((prev) => [
       ...prev,
-      { icon: statIcon.trim(), value: statValue.trim(), label: statLabel.trim() },
+      {
+        icon: statIcon.trim(),
+        value: statValue.trim(),
+        label: statLabel.trim(),
+      },
     ]);
     setStatIcon("");
     setStatValue("");
@@ -117,8 +121,10 @@ const AddHero = () => {
       formData.append("is_active", String(values.is_active));
 
       if (values.badge) formData.append("badge", values.badge);
-      if (values.affiliation) formData.append("affiliation", values.affiliation);
-      if (values.description) formData.append("description", values.description);
+      if (values.affiliation)
+        formData.append("affiliation", values.affiliation);
+      if (values.description)
+        formData.append("description", values.description);
       if (values.primary_button_text)
         formData.append("primary_button_text", values.primary_button_text);
       if (values.primary_button_link)
@@ -127,8 +133,10 @@ const AddHero = () => {
         formData.append("secondary_button_text", values.secondary_button_text);
       if (values.secondary_button_link)
         formData.append("secondary_button_link", values.secondary_button_link);
-      if (values.rating_value) formData.append("rating_value", values.rating_value);
-      if (values.rating_label) formData.append("rating_label", values.rating_label);
+      if (values.rating_value)
+        formData.append("rating_value", values.rating_value);
+      if (values.rating_label)
+        formData.append("rating_label", values.rating_label);
       if (values.floating_badge)
         formData.append("floating_badge", values.floating_badge);
 
@@ -302,7 +310,10 @@ const AddHero = () => {
               {...register("is_active")}
               className="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+            <label
+              htmlFor="is_active"
+              className="text-sm font-medium text-gray-700"
+            >
               Active (visible on homepage)
             </label>
           </div>
@@ -364,7 +375,8 @@ const AddHero = () => {
               Trust Stats (Optional)
             </label>
             <p className="text-xs text-gray-500">
-              Icon name uses Lucide icon names, e.g. &quot;Award&quot;, &quot;Activity&quot;, &quot;Users&quot;.
+              Icon name uses Lucide icon names, e.g. &quot;Award&quot;,
+              &quot;Activity&quot;, &quot;Users&quot;.
             </p>
 
             {stats.length > 0 && (
@@ -376,7 +388,9 @@ const AddHero = () => {
                   >
                     <div className="flex-1 min-w-0 grid grid-cols-3 gap-2 text-sm">
                       <span className="text-gray-500">{stat.icon}</span>
-                      <span className="font-medium text-gray-800">{stat.value}</span>
+                      <span className="font-medium text-gray-800">
+                        {stat.value}
+                      </span>
                       <span className="text-gray-600">{stat.label}</span>
                     </div>
                     <button
@@ -436,7 +450,7 @@ const AddHero = () => {
                   src={imagePreview}
                   alt="Hero Photo Preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             ) : (

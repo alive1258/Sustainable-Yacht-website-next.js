@@ -316,7 +316,7 @@ const EditBlogPost = () => {
                   src={previewImage}
                   alt="Blog Preview"
                   fill
-                  className="object-cover"
+                  className=""
                 />
               </div>
             )}
