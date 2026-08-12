@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     siteName: "Eco Yachts",
     images: [
       {
-        url: "/images/sustainable-yacht.jpg",
+        url: "/images/hero-bg.jpg",
         width: 1600,
         height: 1000,
         alt: "Eco Yachts — sustainable luxury yacht at sea",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     title: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
     description:
       "Charter eco-certified luxury yachts and sail the world responsibly.",
-    images: ["/images/sustainable-yacht.jpg"],
+    images: ["/images/hero-bg.jpg"],
   },
 
   // ✅ Robots

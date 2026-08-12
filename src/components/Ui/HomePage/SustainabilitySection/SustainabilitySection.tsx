@@ -1,5 +1,12 @@
 import Image from "next/image";
-import { ArrowRight, Droplets, HeartHandshake, Recycle, ShieldCheck, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Droplets,
+  HeartHandshake,
+  Recycle,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 
 const HIGHLIGHTS = [
   {
@@ -68,11 +75,11 @@ const SustainabilitySection = () => {
         <div className="relative">
           <div className="relative aspect-[4/5] sm:aspect-[4/3] overflow-hidden rounded-[2rem] shadow-xl">
             <Image
-              src="/images/sustainable-yacht.jpg"
+              src="/images/experiences/images-37.jpg"
               alt="Guests relaxing onboard a sustainable charter yacht"
               fill
               sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover"
+              className=""
             />
           </div>
 

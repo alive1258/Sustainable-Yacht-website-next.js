@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { HiMiniXMark, HiOutlineBars3BottomLeft } from "react-icons/hi2";
 import { Clock, Phone, Search } from "lucide-react";
 import Logo from "../Logo/Logo";
@@ -14,16 +16,17 @@ interface MenuItem {
 const CONTACT_PHONE = "+1 (202) 555-0198";
 const OPEN_HOURS = "Mon - Sat, 9am - 6pm";
 
+const MENU_ITEMS: MenuItem[] = [
+  { display: "Home", href: "/" },
+  { display: "Yachts", href: "/yachts" },
+  { display: "Destinations", href: "/destinations" },
+  { display: "Contact", href: "/contact" },
+];
+
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  const menuItems: MenuItem[] = [
-    { display: "Home", href: "home" },
-    { display: "Yachts", href: "yachts" },
-    { display: "Destinations", href: "destinations" },
-    { display: "Experiences", href: "experiences" },
-  ];
+  const pathname = usePathname();
 
   /* scroll shadow */
   useEffect(() => {
@@ -32,14 +35,12 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* smooth scroll */
-  const handleScroll = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+  /* scroll to the yacht search widget when already on the home page */
+  const handleSearchClick = () => {
+    if (pathname === "/") {
+      document
+        .getElementById("yacht-search")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsOpen(false);
   };
@@ -68,12 +69,12 @@ const Navbar: React.FC = () => {
                 {OPEN_HOURS}
               </span>
             </div>
-            <button
-              onClick={() => handleScroll("yacht-search")}
+            <Link
+              href="/contact"
               className="bg-gold-500 text-brand-900 px-3.5 py-1 rounded-full text-xs font-semibold hover:bg-gold-400 transition"
             >
               Book Now
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -84,37 +85,47 @@ const Navbar: React.FC = () => {
           }`}
         >
           <div className="container flex items-center justify-between h-16">
-            <button onClick={() => handleScroll("home")}>
+            <Link href="/" onClick={() => setIsOpen(false)}>
               <Logo variant="dark" />
-            </button>
+            </Link>
 
             {/* DESKTOP MENU */}
             <nav className="hidden lg:flex gap-7">
-              {menuItems.map((item) => (
-                <button
-                  key={item.href}
-                  onClick={() => handleScroll(item.href)}
-                  className="text-sm font-medium text-brand-900 hover:text-brand-600 transition"
-                >
-                  {item.display}
-                </button>
-              ))}
+              {MENU_ITEMS.map((item) => {
+                const isActive =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`text-sm font-medium transition ${
+                      isActive
+                        ? "text-brand-600"
+                        : "text-brand-900 hover:text-brand-600"
+                    }`}
+                  >
+                    {item.display}
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="hidden lg:flex items-center gap-4">
               <button
-                onClick={() => handleScroll("yacht-search")}
+                onClick={handleSearchClick}
                 aria-label="Search yachts"
                 className="flex items-center justify-center w-9 h-9 rounded-full text-brand-900 hover:bg-brand-50 transition"
               >
                 <Search size={18} />
               </button>
-              <button
-                onClick={() => handleScroll("yacht-search")}
+              <Link
+                href="/yachts"
                 className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-700 transition"
               >
                 Explore Yachts
-              </button>
+              </Link>
             </div>
 
             {/* MOBILE ICON */}
@@ -150,14 +161,15 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="p-6 space-y-4">
-          {menuItems.map((item) => (
-            <button
+          {MENU_ITEMS.map((item) => (
+            <Link
               key={item.href}
-              onClick={() => handleScroll(item.href)}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
               className="block w-full text-left text-base font-medium text-brand-900 hover:text-brand-600 transition"
             >
               {item.display}
-            </button>
+            </Link>
           ))}
 
           <a
@@ -168,12 +180,13 @@ const Navbar: React.FC = () => {
             {CONTACT_PHONE}
           </a>
 
-          <button
-            onClick={() => handleScroll("yacht-search")}
-            className="w-full bg-gold-500 text-brand-900 py-2 rounded-lg mt-2 font-semibold hover:bg-gold-400 transition"
+          <Link
+            href="/contact"
+            onClick={() => setIsOpen(false)}
+            className="block w-full text-center bg-gold-500 text-brand-900 py-2 rounded-lg mt-2 font-semibold hover:bg-gold-400 transition"
           >
             Book Now
-          </button>
+          </Link>
         </div>
       </div>
 

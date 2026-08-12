@@ -18,14 +18,14 @@ const CONTACT_EMAIL = "hello@ecoyachts.com";
 const OFFICE_ADDRESS = "14 Marina Boulevard, Athens, Greece";
 
 const QUICK_LINKS = [
-  { label: "Home", href: "/#home" },
-  { label: "Yachts", href: "/#yachts" },
-  { label: "Destinations", href: "/#destinations" },
-  { label: "Experiences", href: "/#experiences" },
+  { label: "Home", href: "/" },
+  { label: "Yachts", href: "/yachts" },
+  { label: "Destinations", href: "/destinations" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const SUPPORT_LINKS = [
-  { label: "Find Your Yacht", href: "/#yacht-search" },
+  { label: "Experiences", href: "/#experiences" },
   { label: "Sailing Insights", href: "/#insights" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms & Conditions", href: "/terms-conditions" },

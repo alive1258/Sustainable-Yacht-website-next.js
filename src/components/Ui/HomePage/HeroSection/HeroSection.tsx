@@ -17,10 +17,10 @@ const HeroSection = () => {
         fill
         priority
         sizes="100vw"
-        className="object-cover"
+        className=""
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-900/55 to-brand-900/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-900/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-brand-900/90 via-brand-700/55 to-brand-300/10" />
+      <div className="absolute inset-0 bg-linear-to-t from-brand-900/60 via-transparent to-transparent" />
 
       <div className="container relative">
         <div className="max-w-xl">

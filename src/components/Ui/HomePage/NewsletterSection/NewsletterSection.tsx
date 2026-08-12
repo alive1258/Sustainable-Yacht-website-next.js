@@ -21,7 +21,7 @@ const NewsletterSection = () => {
     <section className="relative overflow-hidden bg-brand-900 py-16 md:py-20">
       <div className="absolute inset-0 opacity-25">
         <Image
-          src="/images/sustainable-yacht.jpg"
+          src="/images/yachts/yacht-sharlou.jpg"
           alt=""
           fill
           className="object-cover"

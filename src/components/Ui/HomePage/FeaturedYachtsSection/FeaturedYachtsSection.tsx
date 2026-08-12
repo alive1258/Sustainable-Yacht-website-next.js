@@ -39,6 +39,13 @@ const FeaturedYachtsSection = () => {
               Sail in Sustainable Luxury
             </h2>
           </div>
+          <a
+            href="/yachts"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
+          >
+            View Full Fleet
+            <ArrowRight size={16} />
+          </a>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -78,7 +85,7 @@ const FeaturedYachtsSection = () => {
                     <span className="text-brand-900/50"> / night</span>
                   </span>
                   <a
-                    href="#yacht-search"
+                    href="/yachts"
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
                   >
                     View Details

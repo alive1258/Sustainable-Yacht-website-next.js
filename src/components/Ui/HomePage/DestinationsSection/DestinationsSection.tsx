@@ -39,7 +39,7 @@ const DestinationsSection = () => {
             </h2>
           </div>
           <a
-            href="#destinations"
+            href="/destinations"
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
           >
             View All Destinations

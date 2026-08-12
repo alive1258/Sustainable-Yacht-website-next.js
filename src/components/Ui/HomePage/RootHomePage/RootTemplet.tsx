@@ -1,5 +1,6 @@
 import DestinationsSection from "../DestinationsSection/DestinationsSection";
 import ExperiencesSection from "../ExperiencesSection/ExperiencesSection";
+import FaqSection from "../FaqSection/FaqSection";
 import FeaturedYachtsSection from "../FeaturedYachtsSection/FeaturedYachtsSection";
 import HeroSection from "../HeroSection/HeroSection";
 import InsightsSection from "../InsightsSection/InsightsSection";
@@ -7,6 +8,7 @@ import NewsletterSection from "../NewsletterSection/NewsletterSection";
 import PromiseSection from "../PromiseSection/PromiseSection";
 import SustainabilitySection from "../SustainabilitySection/SustainabilitySection";
 import TestimonialsSection from "../TestimonialsSection/TestimonialsSection";
+import VideoSection from "../VideoSection/VideoSection";
 import YachtSearchSection from "../YachtSearchSection/YachtSearchSection";
 
 const RootHomePage = () => {
@@ -26,19 +28,21 @@ const RootHomePage = () => {
         <YachtSearchSection />
       </div>
 
-      <div id="yachts" className="scroll-mt-[100px]">
-        <FeaturedYachtsSection />
-      </div>
+      <FeaturedYachtsSection />
 
-      <div id="destinations" className="scroll-mt-[100px]">
-        <DestinationsSection />
-      </div>
+      <VideoSection />
+
+      <DestinationsSection />
 
       <PromiseSection />
 
       <TestimonialsSection />
 
-      <InsightsSection />
+      <FaqSection />
+
+      <div id="insights" className="scroll-mt-[100px]">
+        <InsightsSection />
+      </div>
 
       <NewsletterSection />
     </>

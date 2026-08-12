@@ -6,17 +6,17 @@ const ARTICLES = [
   {
     title: "The Rise of Sustainable Luxury Travel",
     date: "Jul 14, 2026",
-    image: "/images/experiences/tropical-escapes.jpg",
+    image: "/images/experiences/exp-savannah.jpg",
   },
   {
     title: "Top Eco-Friendly Destinations to Visit",
     date: "Jun 30, 2026",
-    image: "/images/experiences/cultural-voyages.jpg",
+    image: "/images/destinations/dest-44.jpg",
   },
   {
     title: "How Yachts Are Going Green",
     date: "Jun 12, 2026",
-    image: "/images/yachts/eco-serenity.jpg",
+    image: "/images/yachts/yacht-ocean-eco-90.webp",
   },
 ];
 

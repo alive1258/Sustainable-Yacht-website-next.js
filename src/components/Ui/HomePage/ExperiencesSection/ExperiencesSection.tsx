@@ -18,6 +18,21 @@ const EXPERIENCES = [
     description: "Diving, wildlife encounters, and untouched coastlines.",
     image: "/images/experiences/adventure-nature.jpg",
   },
+  {
+    title: "Water Sports & Adventure",
+    description: "Jet skis, tenders, and on-water thrills off the swim deck.",
+    image: "/images/experiences/exp-jetski-tender.jpg",
+  },
+  {
+    title: "Dubai Luxury Excursions",
+    description: "Marina skylines, gourmet dining, and desert-meets-sea style.",
+    image: "/images/experiences/exp-dubai-watersports.jpeg",
+  },
+  {
+    title: "Marina & Coastal Living",
+    description: "Wake up in the world's most photogenic harbors.",
+    image: "/images/experiences/exp-marina.jpg",
+  },
 ];
 
 const ExperiencesSection = () => {
@@ -34,10 +49,10 @@ const ExperiencesSection = () => {
             </h2>
           </div>
           <a
-            href="#experiences"
+            href="/contact"
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
           >
-            View All Experiences
+            Plan Your Journey
             <ArrowRight size={16} />
           </a>
         </div>
