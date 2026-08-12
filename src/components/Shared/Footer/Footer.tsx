@@ -1,45 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Mail, PhoneCall, ArrowUp } from "lucide-react";
+import { MapPin, Mail, PhoneCall, ArrowUp, ShieldCheck, Leaf } from "lucide-react";
 import {
   FaFacebookF,
   FaInstagram,
   FaYoutube,
   FaLinkedinIn,
 } from "react-icons/fa";
-import { SERVICE_TITLES } from "@/src/components/Ui/HomePage/ServicesSection/ServicesSection";
 import Logo from "../Logo/Logo";
 
 /* ================= CONSTANTS ================= */
-// TODO: replace with the clinic's real contact details — same placeholders
-// used in Navbar / AppointmentSection / ContactSection.
-const CONTACT_PHONE = "+880 1XXX-XXXXXX";
-const CONTACT_EMAIL = "info@dranarulislam.com";
-const CLINIC_ADDRESS =
-  "Bangladesh Medical University (Ex-PG Hospital), Mirpur, Dhaka, Bangladesh";
+// TODO: replace with the charter company's real contact details — same
+// placeholders used in Navbar / NewsletterSection.
+const CONTACT_PHONE = "+1 (202) 555-0198";
+const CONTACT_EMAIL = "hello@ecoyachts.com";
+const OFFICE_ADDRESS = "14 Marina Boulevard, Athens, Greece";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/#home" },
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Blog", href: "/#blog" },
-  { label: "FAQ", href: "/#faq" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Yachts", href: "/#yachts" },
+  { label: "Destinations", href: "/#destinations" },
+  { label: "Experiences", href: "/#experiences" },
 ];
 
-const LEGAL_LINKS = [
+const SUPPORT_LINKS = [
+  { label: "Find Your Yacht", href: "/#yacht-search" },
+  { label: "Sailing Insights", href: "/#insights" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms & Conditions", href: "/terms-conditions" },
   { label: "Refund Policy", href: "/refund-policy" },
 ];
 
-// TODO: swap in the clinic's real social profile URLs (same as ContactSection).
+// TODO: swap in the charter company's real social profile URLs
 const SOCIAL_LINKS = [
   { icon: FaFacebookF, label: "Facebook", href: "#" },
   { icon: FaInstagram, label: "Instagram", href: "#" },
   { icon: FaYoutube, label: "YouTube", href: "#" },
   { icon: FaLinkedinIn, label: "LinkedIn", href: "#" },
+];
+
+const CERTIFICATIONS = [
+  { icon: Leaf, label: "Eco Certified Fleet" },
+  { icon: ShieldCheck, label: "Verified & Insured" },
 ];
 
 /* ================= COMPONENT ================= */
@@ -51,7 +54,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0A0A0A] text-white pt-20 pb-10 border-t border-white/5">
+    <footer className="bg-brand-900 text-white pt-20 pb-10 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
           {/* BRAND */}
@@ -60,10 +63,10 @@ const Footer = () => {
               <Link href="/#home" className="inline-flex">
                 <Logo variant="light" size="lg" />
               </Link>
-              <p className="mt-4 text-gray-400 text-sm max-w-sm leading-relaxed">
-                MBBS (DU), MS Neurosurgery (Course) — general medicine and
-                neurosurgical consultation built around clear communication
-                and patient-first care.
+              <p className="mt-4 text-brand-100/70 text-sm max-w-sm leading-relaxed">
+                Eco-certified yacht charters for travelers who care about
+                where they go and how they get there. Luxury that gives back
+                to the seas it sails.
               </p>
             </div>
 
@@ -74,10 +77,22 @@ const Footer = () => {
                   href={href}
                   onClick={href === "#" ? (e) => e.preventDefault() : undefined}
                   aria-label={label}
-                  className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-400 hover:bg-[#2AA7FF] hover:text-white transition-colors"
+                  className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-brand-100/70 hover:bg-brand-600 hover:text-white transition-colors"
                 >
                   <Icon size={14} />
                 </a>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {CERTIFICATIONS.map(({ icon: Icon, label }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center gap-2 text-xs text-brand-100/70"
+                >
+                  <Icon size={14} className="text-gold-400" />
+                  {label}
+                </span>
               ))}
             </div>
           </div>
@@ -85,7 +100,7 @@ const Footer = () => {
           {/* LINK COLUMNS */}
           <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
             <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-200">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
                 Quick Links
               </h3>
               <ul className="space-y-3">
@@ -93,7 +108,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-[#2AA7FF] text-sm transition-colors duration-300"
+                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
                     >
                       {link.label}
                     </Link>
@@ -103,17 +118,17 @@ const Footer = () => {
             </div>
 
             <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-200">
-                Our Services
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
+                Support
               </h3>
               <ul className="space-y-3">
-                {SERVICE_TITLES.slice(0, 6).map((title) => (
-                  <li key={title}>
+                {SUPPORT_LINKS.map((link) => (
+                  <li key={link.label}>
                     <Link
-                      href="/#services"
-                      className="text-gray-400 hover:text-[#2AA7FF] text-sm transition-colors duration-300"
+                      href={link.href}
+                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
                     >
-                      {title}
+                      {link.label}
                     </Link>
                   </li>
                 ))}
@@ -121,14 +136,14 @@ const Footer = () => {
             </div>
 
             <div className="space-y-5 col-span-2 sm:col-span-1">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-200">
-                Contact
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
+                Contact Us
               </h3>
               <ul className="space-y-3">
                 <li>
                   <a
                     href={`tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}`}
-                    className="flex items-start gap-2.5 text-gray-400 hover:text-[#2AA7FF] text-sm transition-colors duration-300"
+                    className="flex items-start gap-2.5 text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
                   >
                     <PhoneCall size={15} className="mt-0.5 shrink-0" />
                     {CONTACT_PHONE}
@@ -137,15 +152,15 @@ const Footer = () => {
                 <li>
                   <a
                     href={`mailto:${CONTACT_EMAIL}`}
-                    className="flex items-start gap-2.5 text-gray-400 hover:text-[#2AA7FF] text-sm transition-colors duration-300"
+                    className="flex items-start gap-2.5 text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
                   >
                     <Mail size={15} className="mt-0.5 shrink-0" />
                     {CONTACT_EMAIL}
                   </a>
                 </li>
-                <li className="flex items-start gap-2.5 text-gray-400 text-sm">
+                <li className="flex items-start gap-2.5 text-brand-100/70 text-sm">
                   <MapPin size={15} className="mt-0.5 shrink-0" />
-                  {CLINIC_ADDRESS}
+                  {OFFICE_ADDRESS}
                 </li>
               </ul>
             </div>
@@ -154,18 +169,17 @@ const Footer = () => {
 
         {/* BOTTOM BAR */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs text-gray-400 text-center md:text-left">
-            © {currentYear}{" "}
-            <span className="text-[#2AA7FF]">Dr. Anarul Islam</span>. All
-            rights reserved.
+          <p className="text-xs text-brand-100/60 text-center md:text-left">
+            © {currentYear} <span className="text-gold-400">Eco Yachts</span>.
+            All rights reserved.
           </p>
 
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {LEGAL_LINKS.map((link) => (
+            {QUICK_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-xs text-gray-400 hover:text-[#2AA7FF] transition-colors"
+                className="text-xs text-brand-100/60 hover:text-gold-400 transition-colors"
               >
                 {link.label}
               </Link>
@@ -174,7 +188,7 @@ const Footer = () => {
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 hover:text-[#2AA7FF] transition-all group"
+            className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-100/60 hover:text-gold-400 transition-all group"
           >
             Back to top
             <ArrowUp size={12} className="group-hover:-translate-y-1 transition-transform" />

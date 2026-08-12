@@ -1,7 +1,8 @@
 /* ================= LOGO MARK (SVG) ================= */
-/* A pulse/ECG line inside a solid circle — simple, scalable, no external
-   asset needed. Reused as-is on both light (Navbar) and dark (Footer)
-   backgrounds since the circle carries its own brand-blue fill. */
+/* A leaf-in-wave glyph inside a solid circle — evokes sustainability +
+   sailing without needing an external asset. Reused as-is on both light
+   (Navbar) and dark (Footer) backgrounds since the circle carries its own
+   brand fill. */
 export const LogoMark = ({ className = "w-9 h-9" }: { className?: string }) => (
   <svg
     viewBox="0 0 40 40"
@@ -10,13 +11,16 @@ export const LogoMark = ({ className = "w-9 h-9" }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
-    <circle cx="20" cy="20" r="20" fill="#2AA7FF" />
+    <circle cx="20" cy="20" r="20" fill="#1F6F63" />
     <path
-      d="M8 21h4.2l2.3-5.5L18.8 27l3.4-10.5 2 4.5H32"
-      stroke="white"
-      strokeWidth="2.2"
+      d="M13 24c2-6 7-9 13-9-1 6-4 11-10 12.5-1.7.4-3.4-1.4-3-3.5Z"
+      fill="#EAF5F3"
+    />
+    <path
+      d="M9 27c5.5 1.5 11 1.5 16.5-2"
+      stroke="#EAF5F3"
+      strokeWidth="2"
       strokeLinecap="round"
-      strokeLinejoin="round"
     />
   </svg>
 );
@@ -41,11 +45,16 @@ const Logo = ({ variant = "dark", size = "md", className = "" }: LogoProps) => {
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark className={icon} />
       <span
-        className={`font-bold leading-none whitespace-nowrap ${text} ${
-          variant === "dark" ? "text-black" : "text-white"
+        className={`relative font-bold leading-none whitespace-nowrap tracking-tight ${text} ${
+          variant === "dark" ? "text-brand-900" : "text-white"
         }`}
       >
-        Dr. <span className="text-[#2AA7FF]">Anarul Islam</span>
+        eco
+        <span
+          className={`absolute -right-2 -top-1 h-1.5 w-1.5 rounded-full ${
+            variant === "dark" ? "bg-gold-500" : "bg-gold-400"
+          }`}
+        />
       </span>
     </span>
   );

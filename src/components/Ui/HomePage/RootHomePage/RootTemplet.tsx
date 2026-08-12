@@ -1,67 +1,46 @@
-import AboutSection from "../AboutSection/AboutSection";
-import AppointmentSection from "../AppointmentSection/AppointmentSection";
-import BlogSection from "../BlogSection/BlogSection";
-import ContactSection from "../ContactSection/ContactSection";
-import EducationSection from "../EducationSection/EducationSection";
-import FaqSection from "../FaqSection/FaqSection";
-import GallerySection from "../GallerySection/GallerySection";
+import DestinationsSection from "../DestinationsSection/DestinationsSection";
+import ExperiencesSection from "../ExperiencesSection/ExperiencesSection";
+import FeaturedYachtsSection from "../FeaturedYachtsSection/FeaturedYachtsSection";
 import HeroSection from "../HeroSection/HeroSection";
-import ProfessionalMedicalCard from "../ProfessionalMedicalCard/ProfessionalMedicalCard";
-import ReviewsSection from "../ReviewsSection/ReviewsSection";
-import ServicesSection from "../ServicesSection/ServicesSection";
-import VideoSection from "../VideoSection/VideoSection";
+import InsightsSection from "../InsightsSection/InsightsSection";
+import NewsletterSection from "../NewsletterSection/NewsletterSection";
+import PromiseSection from "../PromiseSection/PromiseSection";
+import SustainabilitySection from "../SustainabilitySection/SustainabilitySection";
+import TestimonialsSection from "../TestimonialsSection/TestimonialsSection";
+import YachtSearchSection from "../YachtSearchSection/YachtSearchSection";
 
-// Sections are being rebuilt one by one per the doctor site plan
-// (Hero, About, Education (incl. experience/leadership/certs/awards),
-// Services, Appointment, Video, Blog, Reviews, FAQ, Gallery, Contact done;
-// Prescription still to come).
 const RootHomePage = () => {
   return (
     <>
-      <div id="home">
+      <div id="home" className="scroll-mt-[100px]">
         <HeroSection />
       </div>
 
-      <div id="home-medical-card">
-        <ProfessionalMedicalCard />
+      <SustainabilitySection />
+
+      <div id="experiences" className="scroll-mt-[100px]">
+        <ExperiencesSection />
       </div>
 
-      <div id="about">
-        <AboutSection />
-        <EducationSection />
+      <div id="yacht-search" className="scroll-mt-[100px]">
+        <YachtSearchSection />
       </div>
 
-      <div id="services">
-        <ServicesSection />
+      <div id="yachts" className="scroll-mt-[100px]">
+        <FeaturedYachtsSection />
       </div>
 
-      <div id="appointment">
-        <AppointmentSection />
+      <div id="destinations" className="scroll-mt-[100px]">
+        <DestinationsSection />
       </div>
 
-      <div id="video">
-        <VideoSection />
-      </div>
+      <PromiseSection />
 
-      <div id="blog">
-        <BlogSection />
-      </div>
+      <TestimonialsSection />
 
-      <div id="reviews">
-        <ReviewsSection />
-      </div>
+      <InsightsSection />
 
-      <div id="faq">
-        <FaqSection />
-      </div>
-
-      <div id="gallery">
-        <GallerySection />
-      </div>
-
-      <div id="contact">
-        <ContactSection />
-      </div>
+      <NewsletterSection />
     </>
   );
 };

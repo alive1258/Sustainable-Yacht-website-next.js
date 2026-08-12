@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import Providers from "@/src/lib/providers/Providers";
 import ToastProvider from "../components/Common/ToastProvider/ToastProvider";
@@ -18,48 +18,56 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+// Handwritten accent font for headline highlight words (e.g. "Journeys")
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
 // ✅ SEO Metadata
 // NOTE: metadataBase/canonical use a placeholder domain — swap in the
 // real domain once one is registered/deployed.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dranarulislam.com"),
+  metadataBase: new URL("https://ecoyachts.com"),
 
   title: {
-    default: "Dr. Anarul Islam | MBBS, MS Neurosurgery (Course)",
-    template: "%s | Dr. Anarul Islam",
+    default: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
+    template: "%s | Eco Yachts",
   },
 
   description:
-    "Dr. Anarul Islam (MBBS, MS Neurosurgery Course) provides compassionate, personalized medical care. Book an appointment online today.",
+    "Charter eco-certified luxury yachts and sail the world responsibly. Curated journeys, sustainable travel, and unforgettable experiences on the water.",
 
   keywords: [
-    "Dr. Anarul Islam",
-    "Neurosurgeon Bangladesh",
-    "Doctor appointment booking",
-    "Online doctor consultation",
-    "MBBS MS Neurosurgery",
-    "General physician Dhaka",
+    "Eco Yachts",
+    "sustainable yacht charter",
+    "luxury yacht rental",
+    "eco-friendly yacht travel",
+    "yacht booking",
+    "responsible luxury travel",
   ],
 
-  authors: [{ name: "Dr. Anarul Islam" }],
-  creator: "Dr. Anarul Islam",
-  publisher: "Dr. Anarul Islam",
+  authors: [{ name: "Eco Yachts" }],
+  creator: "Eco Yachts",
+  publisher: "Eco Yachts",
 
-  category: "health",
+  category: "travel",
 
   // ✅ Open Graph (Facebook, LinkedIn)
   openGraph: {
-    title: "Dr. Anarul Islam | MBBS, MS Neurosurgery (Course)",
+    title: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
     description:
-      "Compassionate, personalized medical care from Dr. Anarul Islam — book an appointment online.",
-    url: "https://dranarulislam.com",
-    siteName: "Dr. Anarul Islam",
+      "Charter eco-certified luxury yachts and sail the world responsibly.",
+    url: "https://ecoyachts.com",
+    siteName: "Eco Yachts",
     images: [
       {
-        url: "/images/dr/Anarul-Islam.jpg",
-        width: 631,
-        height: 640,
-        alt: "Dr. Anarul Islam",
+        url: "/images/sustainable-yacht.jpg",
+        width: 1600,
+        height: 1000,
+        alt: "Eco Yachts — sustainable luxury yacht at sea",
       },
     ],
     locale: "en_US",
@@ -69,10 +77,10 @@ export const metadata: Metadata = {
   // ✅ Twitter SEO
   twitter: {
     card: "summary_large_image",
-    title: "Dr. Anarul Islam | MBBS, MS Neurosurgery (Course)",
+    title: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
     description:
-      "Compassionate, personalized medical care from Dr. Anarul Islam — book an appointment online.",
-    images: ["/images/dr/Anarul-Islam.jpg"],
+      "Charter eco-certified luxury yachts and sail the world responsibly.",
+    images: ["/images/sustainable-yacht.jpg"],
   },
 
   // ✅ Robots
@@ -91,7 +99,7 @@ export const metadata: Metadata = {
 
   // ✅ Canonical
   alternates: {
-    canonical: "https://dranarulislam.com",
+    canonical: "https://ecoyachts.com",
   },
 
   // ✅ Icons
@@ -105,7 +113,7 @@ export const metadata: Metadata = {
   },
 
   // ✅ App Info
-  applicationName: "Dr. Anarul Islam",
+  applicationName: "Eco Yachts",
   referrer: "origin-when-cross-origin",
 
   // ✅ Format detection
@@ -122,9 +130,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-white text-black`}
+        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} font-sans antialiased bg-white text-brand-900`}
       >
         <Providers>
           {children}

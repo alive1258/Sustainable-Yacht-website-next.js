@@ -1,13 +1,33 @@
 /* Tailwind import MUST be first */
 @import "tailwindcss";
 
+/* ================= BRAND THEME (Eco Yachts) ================= */
+@theme {
+  --color-brand-50: #eaf5f3;
+  --color-brand-100: #d3ebe6;
+  --color-brand-200: #a8d8cd;
+  --color-brand-300: #7cc2b2;
+  --color-brand-400: #4ca997;
+  --color-brand-500: #2e8b7a;
+  --color-brand-600: #1f6f63;
+  --color-brand-700: #175b51;
+  --color-brand-800: #123f39;
+  --color-brand-900: #0b2622;
+
+  --color-gold-400: #e3b75c;
+  --color-gold-500: #d2a046;
+  --color-gold-600: #b98530;
+
+  --font-script: var(--font-caveat), cursive;
+}
+
 /* ================= ROOT THEME ================= */
 :root {
   --background: #ffffff;
-  --foreground: #040114;
+  --foreground: #0b2622;
   --border-color: #333;
   --border-color-hover: #444;
-  --primary: #2aa7ff;
+  --primary: #1f6f63;
 
   --card-gradient: linear-gradient(
     0deg,
