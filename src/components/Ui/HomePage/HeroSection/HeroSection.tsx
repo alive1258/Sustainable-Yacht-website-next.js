@@ -10,24 +10,35 @@ const STATS = [
 
 const HeroSection = () => {
   return (
-    <section className="bg-white pt-10 pb-16 md:pt-16 md:pb-24">
-      <div className="container grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-700">
+    <section className="relative flex min-h-[640px] items-center overflow-hidden py-24 md:min-h-[760px]">
+      <Image
+        src="/images/hero-bg.jpg"
+        alt="Luxury yacht anchored in a lush tropical bay"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-900/55 to-brand-900/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-900/60 via-transparent to-transparent" />
+
+      <div className="container relative">
+        <div className="max-w-xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-sm">
             <Leaf size={13} />
             Certified Sustainable Charters
           </span>
 
-          <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-900 leading-[1.1]">
+          <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1]">
             Sustainable Yachts.
             <br />
             Extraordinary{" "}
-            <span className="font-script text-5xl sm:text-6xl lg:text-7xl font-normal text-brand-600">
+            <span className="font-script text-5xl sm:text-6xl lg:text-7xl font-normal text-gold-400">
               Journeys.
             </span>
           </h1>
 
-          <p className="mt-6 text-brand-900/70 text-base md:text-lg max-w-lg leading-relaxed">
+          <p className="mt-6 text-white/80 text-base md:text-lg max-w-lg leading-relaxed">
             Charter eco-certified luxury yachts and explore the world&apos;s
             most beautiful coastlines — without compromising the oceans that
             make them beautiful.
@@ -46,30 +57,15 @@ const HeroSection = () => {
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl">
             {STATS.map(({ icon: Icon, value, label }) => (
               <div key={label} className="flex flex-col gap-2">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm">
                   <Icon size={18} />
                 </span>
-                <span className="text-xl font-bold text-brand-900">
-                  {value}
-                </span>
-                <span className="text-xs text-brand-900/60 leading-snug">
+                <span className="text-xl font-bold text-white">{value}</span>
+                <span className="text-xs text-white/70 leading-snug">
                   {label}
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[5/6] overflow-hidden rounded-[2rem] shadow-xl">
-            <Image
-              src="/images/sustainable-yacht.jpg"
-              alt="Sustainable luxury yacht sailing turquoise waters"
-              fill
-              priority
-              sizes="(min-width: 1024px) 45vw, 90vw"
-              className="object-cover"
-            />
           </div>
         </div>
       </div>
