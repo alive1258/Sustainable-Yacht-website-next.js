@@ -34,7 +34,7 @@ const COMPANY_LINKS = [
 
 const SUPPORT_LINKS = [
   { label: "Experiences", href: "/#experiences" },
-  { label: "Sailing Insights", href: "/#insights" },
+  { label: "Sailing Insights", href: "/blog" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms & Conditions", href: "/terms-conditions" },
   { label: "Refund Policy", href: "/refund-policy" },

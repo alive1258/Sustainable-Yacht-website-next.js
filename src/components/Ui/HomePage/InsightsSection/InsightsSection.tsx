@@ -1,24 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, CalendarDays } from "lucide-react";
+import { BLOG_POSTS } from "@/src/utils/data/blog";
 
-// TODO: replace with real articles once the blog backend is wired up
-const ARTICLES = [
-  {
-    title: "The Rise of Sustainable Luxury Travel",
-    date: "Jul 14, 2026",
-    image: "/images/experiences/exp-savannah.jpg",
-  },
-  {
-    title: "Top Eco-Friendly Destinations to Visit",
-    date: "Jun 30, 2026",
-    image: "/images/destinations/dest-44.jpg",
-  },
-  {
-    title: "How Yachts Are Going Green",
-    date: "Jun 12, 2026",
-    image: "/images/yachts/yacht-ocean-eco-90.webp",
-  },
-];
+const ARTICLES = BLOG_POSTS.slice(0, 3);
 
 const InsightsSection = () => {
   return (
@@ -33,16 +18,20 @@ const InsightsSection = () => {
               Sailing Insights &amp; Stories
             </h2>
           </div>
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 cursor-default">
-            Read More
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
+          >
+            View All Articles
             <ArrowRight size={16} />
-          </span>
+          </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {ARTICLES.map((article) => (
-            <div
-              key={article.title}
+            <Link
+              key={article.slug}
+              href={`/blog/${article.slug}`}
               className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
@@ -51,7 +40,7 @@ const InsightsSection = () => {
                   alt={article.title}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className=" transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-6">
@@ -62,8 +51,12 @@ const InsightsSection = () => {
                 <h3 className="mt-2 font-bold text-brand-900 leading-snug group-hover:text-brand-600 transition-colors">
                   {article.title}
                 </h3>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition">
+                  View Details
+                  <ArrowRight size={14} />
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

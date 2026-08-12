@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Award, ArrowRight, Compass, Leaf, Users } from "lucide-react";
 
 const STATS = [
@@ -10,7 +11,7 @@ const STATS = [
 
 const HeroSection = () => {
   return (
-    <section className="relative flex min-h-[640px] items-center overflow-hidden py-24 md:min-h-[760px]">
+    <section className="relative flex min-h-[640px] items-center overflow-hidden py-10 md:py-24 md:min-h-[760px]">
       <Image
         src="/images/banner/banner1.webp"
         // src="/images/hero-bg.jpg"
@@ -20,7 +21,7 @@ const HeroSection = () => {
         sizes="100vw"
         className=""
       />
-      <div className="absolute inset-0 bg-linear-to-r from-[#6AB3FA]/20 via-[#6AB3FA]/10 to-[#6AB3FA]/10" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#6AB3FA]/20 via-[#6AB3FA]/20 to-[#6AB3FA]/20" />
       <div className="absolute inset-0 bg-linear-to-t from-[#6AB3FA]/30 via-transparent to-transparent" />
 
       <div className="container relative">
@@ -45,14 +46,14 @@ const HeroSection = () => {
             make them beautiful.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <a
-              href="#yacht-search"
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
+          <div className="mt-8 w-full flex md:flex-wrap items-center gap-4">
+            <Link
+              href="/yachts"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 sm:w-auto"
             >
               Explore Yachts
               <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
 
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl">
