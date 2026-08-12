@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Ruler, Sparkles, Users } from "lucide-react";
 import PageHero from "@/src/components/Shared/PageHero/PageHero";
+import { getYachtSummaries } from "@/src/utils/data/yachts";
 
 export const metadata: Metadata = {
   title: "Our Fleet",
@@ -9,26 +11,7 @@ export const metadata: Metadata = {
     "Browse the full Eco Yachts fleet — eco-certified sailing and motor yachts for charter, from intimate 6-guest boats to 14-guest flagships.",
 };
 
-// TODO: replace placeholder names/specs/pricing with real fleet inventory
-// once the booking backend exists.
-const FLEET = [
-  { name: "Eco Serenity", length: "82 ft", guests: "10 Guests", price: "$4,200", image: "/images/yachts/eco-serenity.jpg" },
-  { name: "Eco Voyager", length: "95 ft", guests: "12 Guests", price: "$5,800", image: "/images/yachts/eco-voyager.jpg" },
-  { name: "Eco Dawn", length: "68 ft", guests: "8 Guests", price: "$3,400", image: "/images/yachts/eco-dawn.jpg" },
-  { name: "Eco Horizon", length: "88 ft", guests: "10 Guests", price: "$4,600", image: "/images/yachts/yacht-27.jpg" },
-  { name: "Eco Meridian", length: "75 ft", guests: "8 Guests", price: "$3,900", image: "/images/yachts/yacht-28.jpg" },
-  { name: "Eco Tide", length: "70 ft", guests: "8 Guests", price: "$3,600", image: "/images/yachts/yacht-29.jpg" },
-  { name: "Eco Breeze", length: "80 ft", guests: "10 Guests", price: "$4,400", image: "/images/yachts/yacht-30.jpg" },
-  { name: "Eco Current", length: "65 ft", guests: "6 Guests", price: "$3,100", image: "/images/yachts/yacht-31.jpg" },
-  { name: "Eco Compass", length: "92 ft", guests: "12 Guests", price: "$5,500", image: "/images/yachts/yacht-32.jpg" },
-  { name: "Eco Solstice", length: "78 ft", guests: "9 Guests", price: "$4,100", image: "/images/yachts/yacht-33.jpg" },
-  { name: "Eco Mariner", length: "60 ft", guests: "6 Guests", price: "$2,900", image: "/images/yachts/yacht-34.jpg" },
-  { name: "Eco Riva", length: "105 ft", guests: "12 Guests", price: "$6,400", image: "/images/yachts/yacht-2082it.jpeg" },
-  { name: "Eco Aurora", length: "85 ft", guests: "10 Guests", price: "$4,800", image: "/images/yachts/yacht-3148725.jpg" },
-  { name: "Eco Zephyr", length: "72 ft", guests: "8 Guests", price: "$3,700", image: "/images/yachts/yacht-5057.jpg" },
-  { name: "Eco Ocean 90", length: "90 ft", guests: "11 Guests", price: "$5,200", image: "/images/yachts/yacht-ocean-eco-90.webp" },
-  { name: "Eco Sharlou", length: "110 ft", guests: "14 Guests", price: "$7,200", image: "/images/yachts/yacht-sharlou.jpg" },
-];
+const FLEET = getYachtSummaries();
 
 const INNOVATIONS = [
   {
@@ -68,8 +51,9 @@ export default function YachtsPage() {
         <div className="container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {FLEET.map((yacht) => (
-              <div
-                key={yacht.name}
+              <Link
+                key={yacht.slug}
+                href={`/yachts/${yacht.slug}`}
                 className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm hover:shadow-lg transition-shadow"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -102,16 +86,13 @@ export default function YachtsPage() {
                       </span>
                       <span className="text-brand-900/50"> / night</span>
                     </span>
-                    <a
-                      href="/contact"
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
-                    >
-                      Inquire
+                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition">
+                      View Details
                       <ArrowRight size={14} />
-                    </a>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

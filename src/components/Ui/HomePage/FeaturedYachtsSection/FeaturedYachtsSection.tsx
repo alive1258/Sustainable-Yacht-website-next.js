@@ -1,31 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, Ruler, Users } from "lucide-react";
+import { getYachtSummaries } from "@/src/utils/data/yachts";
 
-const YACHTS = [
-  {
-    name: "Eco Serenity",
-    length: "82 ft",
-    guests: "10 Guests",
-    price: "$4,200",
-    image: "/images/yachts/eco-serenity.jpg",
-  },
-  {
-    name: "Eco Voyager",
-    length: "95 ft",
-    guests: "12 Guests",
-    price: "$5,800",
-    image: "/images/yachts/eco-voyager.jpg",
-  },
-  {
-    name: "Eco Dawn",
-    length: "68 ft",
-    guests: "8 Guests",
-    price: "$3,400",
-    image: "/images/yachts/eco-dawn.jpg",
-  },
-];
+const YACHTS = getYachtSummaries().slice(0, 3);
 
-// TODO: connect real fleet inventory + live pricing once the booking API exists
 const FeaturedYachtsSection = () => {
   return (
     <section className="bg-white pt-32 pb-16 md:pt-40 md:pb-24">
@@ -39,19 +18,20 @@ const FeaturedYachtsSection = () => {
               Sail in Sustainable Luxury
             </h2>
           </div>
-          <a
+          <Link
             href="/yachts"
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
           >
             View Full Fleet
             <ArrowRight size={16} />
-          </a>
+          </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {YACHTS.map((yacht) => (
-            <div
-              key={yacht.name}
+            <Link
+              key={yacht.slug}
+              href={`/yachts/${yacht.slug}`}
               className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -84,16 +64,13 @@ const FeaturedYachtsSection = () => {
                     </span>
                     <span className="text-brand-900/50"> / night</span>
                   </span>
-                  <a
-                    href="/yachts"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
-                  >
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 group-hover:text-brand-900 transition">
                     View Details
                     <ArrowRight size={14} />
-                  </a>
+                  </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
