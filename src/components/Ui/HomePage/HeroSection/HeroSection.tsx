@@ -12,15 +12,16 @@ const HeroSection = () => {
   return (
     <section className="relative flex min-h-[640px] items-center overflow-hidden py-24 md:min-h-[760px]">
       <Image
-        src="/images/hero-bg.jpg"
+        src="/images/banner/banner1.webp"
+        // src="/images/hero-bg.jpg"
         alt="Luxury yacht anchored in a lush tropical bay"
         fill
         priority
         sizes="100vw"
         className=""
       />
-      <div className="absolute inset-0 bg-linear-to-r from-brand-900/90 via-brand-700/55 to-brand-300/10" />
-      <div className="absolute inset-0 bg-linear-to-t from-brand-900/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#6AB3FA]/20 via-[#6AB3FA]/10 to-[#6AB3FA]/10" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#6AB3FA]/30 via-transparent to-transparent" />
 
       <div className="container relative">
         <div className="max-w-xl">
