@@ -2,11 +2,11 @@
 
 /* eslint-disable react-hooks/incompatible-library */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
-import { Plus, ArrowLeft, Upload, X, Trash2 } from "lucide-react";
+import { Plus, ArrowLeft, Upload, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
@@ -25,11 +25,6 @@ interface AddHeroFormValues {
   description?: string;
   primary_button_text?: string;
   primary_button_link?: string;
-  secondary_button_text?: string;
-  secondary_button_link?: string;
-  rating_value?: string;
-  rating_label?: string;
-  floating_badge?: string;
   position?: number;
   is_active: boolean;
   image?: FileList;
@@ -40,9 +35,6 @@ const ALL_HERO_PATH = "/dashboard/hero/all-hero";
 const AddHero = () => {
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  const [specialties, setSpecialties] = useState<string[]>([]);
-  const [specialtyInput, setSpecialtyInput] = useState("");
 
   const [stats, setStats] = useState<HeroStat[]>([]);
   const [statIcon, setStatIcon] = useState("");
@@ -60,10 +52,8 @@ const AddHero = () => {
   } = useForm<AddHeroFormValues>({
     defaultValues: {
       title: "",
-      primary_button_text: "Book Appointment",
-      primary_button_link: "#appointment",
-      secondary_button_text: "Watch Intro Video",
-      secondary_button_link: "#video",
+      primary_button_text: "Explore Yachts",
+      primary_button_link: "/yachts",
       position: 1,
       is_active: true,
     },
@@ -82,17 +72,6 @@ const AddHero = () => {
       setImagePreview(null);
     }
   }, [imageFileList]);
-
-  const handleAddSpecialty = () => {
-    const value = specialtyInput.trim();
-    if (!value) return;
-    setSpecialties((prev) => [...prev, value]);
-    setSpecialtyInput("");
-  };
-
-  const handleRemoveSpecialty = (index: number) => {
-    setSpecialties((prev) => prev.filter((_, i) => i !== index));
-  };
 
   const handleAddStat = () => {
     if (!statIcon.trim() || !statValue.trim() || !statLabel.trim()) return;
@@ -129,16 +108,6 @@ const AddHero = () => {
         formData.append("primary_button_text", values.primary_button_text);
       if (values.primary_button_link)
         formData.append("primary_button_link", values.primary_button_link);
-      if (values.secondary_button_text)
-        formData.append("secondary_button_text", values.secondary_button_text);
-      if (values.secondary_button_link)
-        formData.append("secondary_button_link", values.secondary_button_link);
-      if (values.rating_value)
-        formData.append("rating_value", values.rating_value);
-      if (values.rating_label)
-        formData.append("rating_label", values.rating_label);
-      if (values.floating_badge)
-        formData.append("floating_badge", values.floating_badge);
 
       if (
         values.position !== undefined &&
@@ -148,9 +117,6 @@ const AddHero = () => {
         formData.append("position", String(values.position));
       }
 
-      if (specialties.length > 0) {
-        formData.append("specialties", JSON.stringify(specialties));
-      }
       if (stats.length > 0) {
         formData.append("stats", JSON.stringify(stats));
       }
@@ -163,7 +129,6 @@ const AddHero = () => {
       toast.success("Hero section created successfully!");
       reset();
       setImagePreview(null);
-      setSpecialties([]);
       setStats([]);
       router.push(ALL_HERO_PATH);
     } catch (err) {
@@ -197,26 +162,27 @@ const AddHero = () => {
           <Input
             label="Title"
             text="title"
+            placeholder="Sustainable Yachts."
             register={register("title", { required: "Title is required" })}
             errors={errors}
+          />
+
+          {/* Highlighted Text */}
+          <Input
+            label="Highlighted Text (Optional)"
+            text="affiliation"
+            placeholder="Extraordinary Journeys."
+            register={register("affiliation")}
+            errors={errors}
+            required={false}
           />
 
           {/* Badge */}
           <Input
             label="Badge (Optional)"
             text="badge"
-            placeholder="MBBS (DU) • CMU (Ultrasonography) • MS Neurosurgery (Course)"
+            placeholder="Certified Sustainable Charters"
             register={register("badge")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Affiliation */}
-          <Input
-            label="Affiliation (Optional)"
-            text="affiliation"
-            placeholder="Bangladesh Medical University (Ex-PG Hospital), Mirpur"
-            register={register("affiliation")}
             errors={errors}
             required={false}
           />
@@ -231,62 +197,20 @@ const AddHero = () => {
             required={false}
           />
 
-          {/* Primary Button */}
+          {/* CTA Button */}
           <Input
-            label="Primary Button Text"
+            label="Button Text"
             text="primary_button_text"
+            placeholder="Explore Yachts"
             register={register("primary_button_text")}
             errors={errors}
             required={false}
           />
           <Input
-            label="Primary Button Link"
+            label="Button Link"
             text="primary_button_link"
+            placeholder="/yachts"
             register={register("primary_button_link")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Secondary Button */}
-          <Input
-            label="Secondary Button Text"
-            text="secondary_button_text"
-            register={register("secondary_button_text")}
-            errors={errors}
-            required={false}
-          />
-          <Input
-            label="Secondary Button Link"
-            text="secondary_button_link"
-            register={register("secondary_button_link")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Rating */}
-          <Input
-            label="Rating Value (Optional)"
-            text="rating_value"
-            placeholder="5"
-            register={register("rating_value")}
-            errors={errors}
-            required={false}
-          />
-          <Input
-            label="Rating Label (Optional)"
-            text="rating_label"
-            placeholder="50000+ Patient Reviews"
-            register={register("rating_label")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Floating Badge */}
-          <Input
-            label="Floating Badge Text (Optional)"
-            text="floating_badge"
-            placeholder="Available for Appointments"
-            register={register("floating_badge")}
             errors={errors}
             required={false}
           />
@@ -295,7 +219,7 @@ const AddHero = () => {
           <Textarea
             label="Description (Optional)"
             text="description"
-            placeholder="Compassionate, personalized medical care..."
+            placeholder="Charter eco-certified luxury yachts and explore the world's most beautiful coastlines..."
             register={register("description")}
             errors={errors}
             required={false}
@@ -318,65 +242,16 @@ const AddHero = () => {
             </label>
           </div>
 
-          {/* Specialties */}
-          <div className="col-span-full flex flex-col gap-2">
-            <label className="font-semibold text-sm text-gray-700">
-              Areas of Focus (Optional)
-            </label>
-
-            {specialties.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {specialties.map((specialty, index) => (
-                  <span
-                    key={`${specialty}-${index}`}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700"
-                  >
-                    {specialty}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveSpecialty(index)}
-                      className="text-emerald-500 hover:text-emerald-700"
-                    >
-                      <X size={12} />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={specialtyInput}
-                onChange={(e) => setSpecialtyInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleAddSpecialty();
-                  }
-                }}
-                placeholder="e.g. Brain and Spinal Tumors"
-                className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-              />
-              <button
-                type="button"
-                onClick={handleAddSpecialty}
-                className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                <Plus size={16} />
-                Add
-              </button>
-            </div>
-          </div>
-
           {/* Trust Stats */}
           <div className="col-span-full flex flex-col gap-2">
             <label className="font-semibold text-sm text-gray-700">
-              Trust Stats (Optional)
+              Stats (Optional)
             </label>
             <p className="text-xs text-gray-500">
-              Icon name uses Lucide icon names, e.g. &quot;Award&quot;,
-              &quot;Activity&quot;, &quot;Users&quot;.
+              Shown as quick trust indicators below the CTA (e.g. Years of
+              Experience, Destinations Covered). Icon name uses Lucide icon
+              names, e.g. &quot;Award&quot;, &quot;Compass&quot;,
+              &quot;Leaf&quot;, &quot;Users&quot;.
             </p>
 
             {stats.length > 0 && (
@@ -441,20 +316,20 @@ const AddHero = () => {
           {/* Image Upload & Preview */}
           <div className="col-span-full border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-emerald-500 transition">
             <label className="block mb-2 font-semibold text-sm text-gray-700">
-              Doctor Photo
+              Background Image
             </label>
 
             {imagePreview ? (
-              <div className="relative mb-4 h-40 w-40 overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+              <div className="relative mb-4 h-40 w-full max-w-md overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
                 <Image
                   src={imagePreview}
-                  alt="Hero Photo Preview"
+                  alt="Hero Background Preview"
                   fill
-                  className=""
+                  className="object-cover"
                 />
               </div>
             ) : (
-              <div className="mb-4 h-40 w-40 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-100 text-gray-400">
+              <div className="mb-4 h-40 w-full max-w-md rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-100 text-gray-400">
                 <Upload size={24} />
               </div>
             )}
