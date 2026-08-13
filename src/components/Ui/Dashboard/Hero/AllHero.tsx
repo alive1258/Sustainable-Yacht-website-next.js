@@ -131,7 +131,7 @@ const AllHero: React.FC = () => {
                 Title
               </th>
               <th className="px-5 py-3 text-left text-sm font-semibold text-gray-700">
-                Affiliation
+                Highlight
               </th>
               <th className="px-5 py-3 text-center text-sm font-semibold text-gray-700">
                 Position

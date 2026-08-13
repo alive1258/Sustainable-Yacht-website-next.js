@@ -2,19 +2,11 @@
 
 /* eslint-disable react-hooks/incompatible-library */
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
-import {
-  Save,
-  ArrowLeft,
-  Loader2,
-  Upload,
-  X,
-  Plus,
-  Trash2,
-} from "lucide-react";
+import { Save, ArrowLeft, Loader2, Upload, Plus, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
@@ -40,11 +32,6 @@ interface EditHeroFormValues {
   description?: string;
   primary_button_text?: string;
   primary_button_link?: string;
-  secondary_button_text?: string;
-  secondary_button_link?: string;
-  rating_value?: string;
-  rating_label?: string;
-  floating_badge?: string;
   position?: number;
   is_active: boolean;
   image?: FileList;
@@ -52,13 +39,10 @@ interface EditHeroFormValues {
 
 const ALL_HERO_PATH = "/dashboard/hero/all-hero";
 
-const EditHero: React.FC<EditHeroProps> = ({ id }) => {
+const EditHero = ({ id }: EditHeroProps) => {
   const router = useRouter();
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  const [specialties, setSpecialties] = useState<string[]>([]);
-  const [specialtyInput, setSpecialtyInput] = useState("");
 
   const [stats, setStats] = useState<HeroStat[]>([]);
   const [statIcon, setStatIcon] = useState("");
@@ -101,16 +85,10 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
         description: item.description || "",
         primary_button_text: item.primary_button_text || "",
         primary_button_link: item.primary_button_link || "",
-        secondary_button_text: item.secondary_button_text || "",
-        secondary_button_link: item.secondary_button_link || "",
-        rating_value: item.rating_value || "",
-        rating_label: item.rating_label || "",
-        floating_badge: item.floating_badge || "",
         position: item.position ?? 1,
         is_active: item.is_active ?? true,
       });
 
-      setSpecialties(item.specialties || []);
       setStats(item.stats || []);
 
       if (item.image) {
@@ -118,17 +96,6 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
       }
     }
   }, [heroData, reset]);
-
-  const handleAddSpecialty = () => {
-    const value = specialtyInput.trim();
-    if (!value) return;
-    setSpecialties((prev) => [...prev, value]);
-    setSpecialtyInput("");
-  };
-
-  const handleRemoveSpecialty = (index: number) => {
-    setSpecialties((prev) => prev.filter((_, i) => i !== index));
-  };
 
   const handleAddStat = () => {
     if (!statIcon.trim() || !statValue.trim() || !statLabel.trim()) return;
@@ -165,16 +132,6 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
         formData.append("primary_button_text", values.primary_button_text);
       if (values.primary_button_link)
         formData.append("primary_button_link", values.primary_button_link);
-      if (values.secondary_button_text)
-        formData.append("secondary_button_text", values.secondary_button_text);
-      if (values.secondary_button_link)
-        formData.append("secondary_button_link", values.secondary_button_link);
-      if (values.rating_value)
-        formData.append("rating_value", values.rating_value);
-      if (values.rating_label)
-        formData.append("rating_label", values.rating_label);
-      if (values.floating_badge)
-        formData.append("floating_badge", values.floating_badge);
 
       if (
         values.position !== undefined &&
@@ -184,9 +141,8 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
         formData.append("position", String(values.position));
       }
 
-      // Always send specialties/stats so removals persist (an empty array
-      // still needs to reach the backend to clear previously saved values).
-      formData.append("specialties", JSON.stringify(specialties));
+      // Always send stats so removals persist (an empty array still needs
+      // to reach the backend to clear previously saved values).
       formData.append("stats", JSON.stringify(stats));
 
       if (values.image?.[0]) {
@@ -242,20 +198,22 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
             errors={errors}
           />
 
-          {/* Badge */}
+          {/* Highlighted Text */}
           <Input
-            label="Badge (Optional)"
-            text="badge"
-            register={register("badge")}
+            label="Highlighted Text (Optional)"
+            text="affiliation"
+            placeholder="Extraordinary Journeys."
+            register={register("affiliation")}
             errors={errors}
             required={false}
           />
 
-          {/* Affiliation */}
+          {/* Badge */}
           <Input
-            label="Affiliation (Optional)"
-            text="affiliation"
-            register={register("affiliation")}
+            label="Badge (Optional)"
+            text="badge"
+            placeholder="Certified Sustainable Charters"
+            register={register("badge")}
             errors={errors}
             required={false}
           />
@@ -270,59 +228,20 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
             required={false}
           />
 
-          {/* Primary Button */}
+          {/* CTA Button */}
           <Input
-            label="Primary Button Text"
+            label="Button Text"
             text="primary_button_text"
+            placeholder="Explore Yachts"
             register={register("primary_button_text")}
             errors={errors}
             required={false}
           />
           <Input
-            label="Primary Button Link"
+            label="Button Link"
             text="primary_button_link"
+            placeholder="/yachts"
             register={register("primary_button_link")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Secondary Button */}
-          <Input
-            label="Secondary Button Text"
-            text="secondary_button_text"
-            register={register("secondary_button_text")}
-            errors={errors}
-            required={false}
-          />
-          <Input
-            label="Secondary Button Link"
-            text="secondary_button_link"
-            register={register("secondary_button_link")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Rating */}
-          <Input
-            label="Rating Value (Optional)"
-            text="rating_value"
-            register={register("rating_value")}
-            errors={errors}
-            required={false}
-          />
-          <Input
-            label="Rating Label (Optional)"
-            text="rating_label"
-            register={register("rating_label")}
-            errors={errors}
-            required={false}
-          />
-
-          {/* Floating Badge */}
-          <Input
-            label="Floating Badge Text (Optional)"
-            text="floating_badge"
-            register={register("floating_badge")}
             errors={errors}
             required={false}
           />
@@ -353,65 +272,16 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
             </label>
           </div>
 
-          {/* Specialties */}
-          <div className="col-span-full flex flex-col gap-2">
-            <label className="font-semibold text-sm text-gray-700">
-              Areas of Focus (Optional)
-            </label>
-
-            {specialties.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {specialties.map((specialty, index) => (
-                  <span
-                    key={`${specialty}-${index}`}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700"
-                  >
-                    {specialty}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveSpecialty(index)}
-                      className="text-emerald-500 hover:text-emerald-700"
-                    >
-                      <X size={12} />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={specialtyInput}
-                onChange={(e) => setSpecialtyInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    handleAddSpecialty();
-                  }
-                }}
-                placeholder="e.g. Brain and Spinal Tumors"
-                className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-              />
-              <button
-                type="button"
-                onClick={handleAddSpecialty}
-                className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                <Plus size={16} />
-                Add
-              </button>
-            </div>
-          </div>
-
           {/* Trust Stats */}
           <div className="col-span-full flex flex-col gap-2">
             <label className="font-semibold text-sm text-gray-700">
-              Trust Stats (Optional)
+              Stats (Optional)
             </label>
             <p className="text-xs text-gray-500">
-              Icon name uses Lucide icon names, e.g. &quot;Award&quot;,
-              &quot;Activity&quot;, &quot;Users&quot;.
+              Shown as quick trust indicators below the CTA (e.g. Years of
+              Experience, Destinations Covered). Icon name uses Lucide icon
+              names, e.g. &quot;Award&quot;, &quot;Compass&quot;,
+              &quot;Leaf&quot;, &quot;Users&quot;.
             </p>
 
             {stats.length > 0 && (
@@ -476,22 +346,22 @@ const EditHero: React.FC<EditHeroProps> = ({ id }) => {
           {/* Image Upload & Preview */}
           <div className="col-span-full border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-emerald-500 transition bg-gray-50/50">
             <label className="block mb-2 font-semibold text-sm text-gray-700">
-              Doctor Photo
+              Background Image
             </label>
 
             <div className="flex flex-col sm:flex-row items-center gap-4">
               {imagePreview ? (
-                <div className="relative h-28 w-28 overflow-hidden rounded-lg border border-gray-200 bg-white shrink-0">
+                <div className="relative h-28 w-full max-w-sm overflow-hidden rounded-lg border border-gray-200 bg-white shrink-0">
                   <Image
                     src={imagePreview}
-                    alt="Hero Photo Preview"
+                    alt="Hero Background Preview"
                     fill
-                    className=""
+                    className="object-cover"
                     unoptimized
                   />
                 </div>
               ) : (
-                <div className="h-28 w-28 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-100 text-gray-400 shrink-0">
+                <div className="h-28 w-full max-w-sm rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-100 text-gray-400 shrink-0">
                   <Upload size={24} />
                 </div>
               )}
