@@ -15,6 +15,7 @@ import {
   Layers,
   LayoutDashboard,
   Leaf,
+  MapPin,
   Newspaper,
   PanelTop,
   PlayCircle,
@@ -151,6 +152,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/sustainability/all-sustainability",
         icon: Leaf,
         menuKey: "sustainability",
+      },
+      {
+        label: "Destinations",
+        href: "/dashboard/destinations/all-destinations",
+        icon: MapPin,
+        menuKey: "destinations",
       },
       {
         label: "About Section",
