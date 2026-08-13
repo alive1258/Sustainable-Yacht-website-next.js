@@ -73,7 +73,7 @@ const SustainabilitySection = () => {
         </div>
 
         <div className="relative">
-          <div className="relative aspect-[4/5] sm:aspect-[4/3] overflow-hidden rounded-[2rem] shadow-xl">
+          <div className="relative aspect-4/5 sm:aspect-4/3 overflow-hidden rounded-4xl shadow-xl">
             <Image
               src="/images/experiences/images-37.jpg"
               alt="Guests relaxing onboard a sustainable charter yacht"

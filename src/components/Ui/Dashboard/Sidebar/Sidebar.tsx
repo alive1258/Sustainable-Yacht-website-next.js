@@ -14,6 +14,7 @@ import {
   HelpCircle,
   Layers,
   LayoutDashboard,
+  Leaf,
   Newspaper,
   PanelTop,
   PlayCircle,
@@ -144,6 +145,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/hero/all-hero",
         icon: PanelTop,
         menuKey: "hero",
+      },
+      {
+        label: "Sustainability Section",
+        href: "/dashboard/sustainability/all-sustainability",
+        icon: Leaf,
+        menuKey: "sustainability",
       },
       {
         label: "About Section",
