@@ -27,6 +27,7 @@ import {
   PlayCircle,
   Quote,
   ShieldCheck,
+  Ship,
   Sparkles,
   Stethoscope,
   Tags,
@@ -71,6 +72,12 @@ const MENU_ITEMS: MenuItem[] = [
     href: "/dashboard",
     icon: LayoutDashboard,
     menuKey: "dashboard",
+  },
+  {
+    label: "Yacht Fleet",
+    href: "/dashboard/yachts/all-yachts",
+    icon: Ship,
+    menuKey: "yachts",
   },
   {
     label: "Chambers",
