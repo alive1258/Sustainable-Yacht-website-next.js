@@ -176,6 +176,12 @@ const MENU_ITEMS: MenuItem[] = [
         menuKey: "sustainability-roadmap",
       },
       {
+        label: "Events & Boat Shows",
+        href: "/dashboard/events/all-events",
+        icon: CalendarDays,
+        menuKey: "events",
+      },
+      {
         label: "Destinations",
         href: "/dashboard/destinations/all-destinations",
         icon: MapPin,
