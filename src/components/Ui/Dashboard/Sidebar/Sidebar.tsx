@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  BarChart3,
   CalendarClock,
   CalendarDays,
   Clapperboard,
@@ -171,6 +172,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/about-explore/all-about-explore",
         icon: Compass,
         menuKey: "about-explore",
+      },
+      {
+        label: "About Stats",
+        href: "/dashboard/about-stats/all-about-stats",
+        icon: BarChart3,
+        menuKey: "about-stats",
       },
       {
         label: "Education Section",
