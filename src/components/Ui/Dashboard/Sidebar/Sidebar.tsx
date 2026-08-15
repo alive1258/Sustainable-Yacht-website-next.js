@@ -19,6 +19,7 @@ import {
   LayoutDashboard,
   Leaf,
   MapPin,
+  Milestone,
   Newspaper,
   PanelTop,
   PlayCircle,
@@ -155,6 +156,24 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/sustainability/all-sustainability",
         icon: Leaf,
         menuKey: "sustainability",
+      },
+      {
+        label: "Sustainability Page Intro",
+        href: "/dashboard/sustainability-intro/all-sustainability-intro",
+        icon: BookOpen,
+        menuKey: "sustainability-intro",
+      },
+      {
+        label: "Sustainability Pillars",
+        href: "/dashboard/sustainability-pillars/all-sustainability-pillars",
+        icon: Leaf,
+        menuKey: "sustainability-pillars",
+      },
+      {
+        label: "Sustainability Roadmap",
+        href: "/dashboard/sustainability-roadmap/all-sustainability-roadmap",
+        icon: Milestone,
+        menuKey: "sustainability-roadmap",
       },
       {
         label: "Destinations",
