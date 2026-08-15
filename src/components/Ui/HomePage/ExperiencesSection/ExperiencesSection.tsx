@@ -64,7 +64,7 @@ const ExperiencesSection = () => {
               key={title}
               className="group overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-4/3 overflow-hidden">
                 <Image
                   src={image}
                   alt={title}

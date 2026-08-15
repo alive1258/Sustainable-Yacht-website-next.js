@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
+  BookOpen,
   CalendarClock,
   CalendarDays,
   Clapperboard,
@@ -178,6 +179,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/about-stats/all-about-stats",
         icon: BarChart3,
         menuKey: "about-stats",
+      },
+      {
+        label: "About Story",
+        href: "/dashboard/about-story/all-about-story",
+        icon: BookOpen,
+        menuKey: "about-story",
       },
       {
         label: "Education Section",

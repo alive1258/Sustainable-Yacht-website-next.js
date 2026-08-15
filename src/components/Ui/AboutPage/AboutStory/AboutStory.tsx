@@ -13,22 +13,22 @@ export default function AboutStory() {
           </h2>
           <div className="mt-5 space-y-4 text-brand-900/70 leading-relaxed">
             <p>
-              Eco Yachts started with a straightforward frustration: the
-              luxury charter industry rarely asked what a week on the water
-              cost the water itself. We set out to build a fleet where hybrid
-              propulsion, responsible provisioning, and eco-certified
-              operations were the standard, not an upsell.
+              Eco Yachts started with a straightforward frustration: the luxury
+              charter industry rarely asked what a week on the water cost the
+              water itself. We set out to build a fleet where hybrid propulsion,
+              responsible provisioning, and eco-certified operations were the
+              standard, not an upsell.
             </p>
             <p>
               Today that means every yacht in our fleet is inspected and
-              certified each season, every itinerary is built with local
-              marine partners, and every guest gets the same standard of
-              service you&apos;d expect from any five-star charter — just
-              without the fuel bill weighing on your conscience.
+              certified each season, every itinerary is built with local marine
+              partners, and every guest gets the same standard of service
+              you&apos;d expect from any five-star charter — just without the
+              fuel bill weighing on your conscience.
             </p>
           </div>
         </div>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+        <div className="relative aspect-4/3 overflow-hidden rounded-2xl">
           <Image
             src="/images/experiences/exp-marina.jpg"
             alt="Eco Yachts marina operations"
