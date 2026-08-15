@@ -4,10 +4,13 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  BarChart3,
+  BookOpen,
   CalendarClock,
   CalendarDays,
   Clapperboard,
   ChevronDown,
+  Compass,
   FileText,
   GalleryHorizontal,
   GraduationCap,
@@ -15,6 +18,7 @@ import {
   Layers,
   LayoutDashboard,
   Leaf,
+  MapPin,
   Newspaper,
   PanelTop,
   PlayCircle,
@@ -153,10 +157,34 @@ const MENU_ITEMS: MenuItem[] = [
         menuKey: "sustainability",
       },
       {
+        label: "Destinations",
+        href: "/dashboard/destinations/all-destinations",
+        icon: MapPin,
+        menuKey: "destinations",
+      },
+      {
         label: "About Section",
         href: "/dashboard/about/all-about",
         icon: UserRound,
         menuKey: "about",
+      },
+      {
+        label: "About Explore Cards",
+        href: "/dashboard/about-explore/all-about-explore",
+        icon: Compass,
+        menuKey: "about-explore",
+      },
+      {
+        label: "About Stats",
+        href: "/dashboard/about-stats/all-about-stats",
+        icon: BarChart3,
+        menuKey: "about-stats",
+      },
+      {
+        label: "About Story",
+        href: "/dashboard/about-story/all-about-story",
+        icon: BookOpen,
+        menuKey: "about-story",
       },
       {
         label: "Education Section",

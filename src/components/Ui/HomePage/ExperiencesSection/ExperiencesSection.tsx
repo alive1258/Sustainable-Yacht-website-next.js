@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const EXPERIENCES = [
   {
@@ -48,13 +49,13 @@ const ExperiencesSection = () => {
               Curated Journeys Just for You
             </h2>
           </div>
-          <a
-            href="/contact"
+          <Link
+            href="/experiences"
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
           >
             Plan Your Journey
             <ArrowRight size={16} />
-          </a>
+          </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -63,7 +64,7 @@ const ExperiencesSection = () => {
               key={title}
               className="group overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-4/3 overflow-hidden">
                 <Image
                   src={image}
                   alt={title}
