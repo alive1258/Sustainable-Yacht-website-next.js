@@ -8,6 +8,7 @@ import {
   CalendarDays,
   Clapperboard,
   ChevronDown,
+  Compass,
   FileText,
   GalleryHorizontal,
   GraduationCap,
@@ -164,6 +165,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/about/all-about",
         icon: UserRound,
         menuKey: "about",
+      },
+      {
+        label: "About Explore Cards",
+        href: "/dashboard/about-explore/all-about-explore",
+        icon: Compass,
+        menuKey: "about-explore",
       },
       {
         label: "Education Section",
