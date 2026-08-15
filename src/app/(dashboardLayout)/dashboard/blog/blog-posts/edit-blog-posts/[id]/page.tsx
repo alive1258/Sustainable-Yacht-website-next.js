@@ -1,17 +1,9 @@
 import EditBlogPost from "@/src/components/Ui/Dashboard/Blog/BlogPost/EditBlogPost";
 
-interface PageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
-
-const Page = async ({ params }: PageProps) => {
-  const { id } = await params;
-
+const Page = () => {
   return (
     <div>
-      <EditBlogPost id={id} />
+      <EditBlogPost />
     </div>
   );
 };
