@@ -13,6 +13,7 @@ import {
   Compass,
   FileText,
   GalleryHorizontal,
+  Gem,
   GraduationCap,
   HelpCircle,
   Layers,
@@ -180,6 +181,12 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/events/all-events",
         icon: CalendarDays,
         menuKey: "events",
+      },
+      {
+        label: "Luxury Charter Portfolio",
+        href: "/dashboard/portfolio/all-portfolio",
+        icon: Gem,
+        menuKey: "portfolio",
       },
       {
         label: "Destinations",
