@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3,
   BookOpen,
-  CalendarClock,
   CalendarDays,
   Clapperboard,
   ChevronDown,
@@ -14,7 +13,6 @@ import {
   FileText,
   GalleryHorizontal,
   Gem,
-  GraduationCap,
   HelpCircle,
   Images,
   Layers,
@@ -31,7 +29,6 @@ import {
   Sparkles,
   Stethoscope,
   Tags,
-  ClipboardList,
   UserCircle,
   UserRound,
   Users,
@@ -78,24 +75,6 @@ const MENU_ITEMS: MenuItem[] = [
     href: "/dashboard/yachts/all-yachts",
     icon: Ship,
     menuKey: "yachts",
-  },
-  {
-    label: "Chambers",
-    href: "/dashboard/chambers/all-chambers",
-    icon: CalendarDays,
-    menuKey: "chambers",
-  },
-  {
-    label: "Appointments",
-    href: "/dashboard/appointments/all-appointments",
-    icon: CalendarClock,
-    menuKey: "appointments",
-  },
-  {
-    label: "Prescriptions",
-    href: "/dashboard/prescriptions/all-prescriptions",
-    icon: ClipboardList,
-    menuKey: "prescriptions",
   },
   {
     label: "Video Gallary",
@@ -238,12 +217,6 @@ const MENU_ITEMS: MenuItem[] = [
         href: "/dashboard/about-story/all-about-story",
         icon: BookOpen,
         menuKey: "about-story",
-      },
-      {
-        label: "Education Section",
-        href: "/dashboard/education/all-education",
-        icon: GraduationCap,
-        menuKey: "education",
       },
       {
         label: "Our Services",

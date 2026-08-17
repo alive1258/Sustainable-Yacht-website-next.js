@@ -41,6 +41,7 @@ const AddSustainability = () => {
   const [highlightIcon, setHighlightIcon] = useState("");
   const [highlightTitle, setHighlightTitle] = useState("");
   const [highlightDescription, setHighlightDescription] = useState("");
+  const [highlightError, setHighlightError] = useState("");
 
   const [createSustainability, { isLoading }] =
     useCreateSustainabilityMutation();
@@ -78,12 +79,16 @@ const AddSustainability = () => {
   }, [imageFileList]);
 
   const handleAddHighlight = () => {
-    if (
-      !highlightIcon.trim() ||
-      !highlightTitle.trim() ||
-      !highlightDescription.trim()
-    )
+    const missing: string[] = [];
+    if (!highlightIcon.trim()) missing.push("Icon");
+    if (!highlightTitle.trim()) missing.push("Title");
+    if (!highlightDescription.trim()) missing.push("Description");
+
+    if (missing.length > 0) {
+      setHighlightError(`${missing.join(", ")} ${missing.length > 1 ? "are" : "is"} required to add a highlight.`);
       return;
+    }
+
     setHighlights((prev) => [
       ...prev,
       {
@@ -95,10 +100,19 @@ const AddSustainability = () => {
     setHighlightIcon("");
     setHighlightTitle("");
     setHighlightDescription("");
+    setHighlightError("");
   };
 
   const handleRemoveHighlight = (index: number) => {
     setHighlights((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleHighlightKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    handleAddHighlight();
   };
 
   const onSubmit: SubmitHandler<AddSustainabilityFormValues> = async (
@@ -307,21 +321,33 @@ const AddSustainability = () => {
               <input
                 type="text"
                 value={highlightIcon}
-                onChange={(e) => setHighlightIcon(e.target.value)}
+                onChange={(e) => {
+                  setHighlightIcon(e.target.value);
+                  setHighlightError("");
+                }}
+                onKeyDown={handleHighlightKeyDown}
                 placeholder="Icon (e.g. Zap)"
                 className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
               />
               <input
                 type="text"
                 value={highlightTitle}
-                onChange={(e) => setHighlightTitle(e.target.value)}
+                onChange={(e) => {
+                  setHighlightTitle(e.target.value);
+                  setHighlightError("");
+                }}
+                onKeyDown={handleHighlightKeyDown}
                 placeholder="Title (e.g. Hybrid & Electric-Powered Yachts)"
                 className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
               />
               <input
                 type="text"
                 value={highlightDescription}
-                onChange={(e) => setHighlightDescription(e.target.value)}
+                onChange={(e) => {
+                  setHighlightDescription(e.target.value);
+                  setHighlightError("");
+                }}
+                onKeyDown={handleHighlightKeyDown}
                 placeholder="Description"
                 className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
               />
@@ -334,6 +360,9 @@ const AddSustainability = () => {
                 Add
               </button>
             </div>
+            {highlightError && (
+              <p className="text-xs text-red-500">{highlightError}</p>
+            )}
           </div>
 
           {/* Image Upload & Preview */}
