@@ -3,14 +3,6 @@ import Link from "next/link";
 import { ArrowRight, Leaf } from "lucide-react";
 import type { ApiResponse } from "@/src/types/axios";
 import type { HeroItem } from "@/src/types/heroType";
-import { getHeroIcon } from "@/src/utils/heroIcons";
-
-const FALLBACK_STATS = [
-  { icon: "Award", value: "20+", label: "Years of Experience" },
-  { icon: "Compass", value: "15+", label: "Destinations Covered" },
-  { icon: "Leaf", value: "40+", label: "Eco-Certified Yachts" },
-  { icon: "Users", value: "5K+", label: "Happy Guests" },
-];
 
 const FALLBACK_IMAGE = "/images/banner/banner1.webp";
 
@@ -41,19 +33,10 @@ const HeroSection = async () => {
   const primaryButtonText = hero?.primary_button_text || "Explore Yachts";
   const primaryButtonLink = hero?.primary_button_link || "/yachts";
   const image = hero?.image || FALLBACK_IMAGE;
-  const stats =
-    hero?.stats && hero.stats.length > 0 ? hero.stats : FALLBACK_STATS;
 
   return (
     <section className="relative flex min-h-[640px] items-center overflow-hidden py-10 md:py-24 md:min-h-[760px]">
-      <Image
-        src={image}
-        alt={title}
-        fill
-        priority
-        sizes="100vw"
-        className=""
-      />
+      <Image src={image} alt={title} fill priority sizes="100vw" className="" />
       <div className="absolute inset-0 bg-linear-to-r from-[#6AB3FA]/20 via-[#6AB3FA]/20 to-[#6AB3FA]/20" />
       <div className="absolute inset-0 bg-linear-to-t from-[#6AB3FA]/30 via-transparent to-transparent" />
 
@@ -84,23 +67,6 @@ const HeroSection = async () => {
               {primaryButtonText}
               <ArrowRight size={16} />
             </Link>
-          </div>
-
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl">
-            {stats.map(({ icon, value, label }) => {
-              const Icon = getHeroIcon(icon);
-              return (
-                <div key={label} className="flex flex-col gap-2">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm">
-                    <Icon size={18} />
-                  </span>
-                  <span className="text-xl font-bold text-white">{value}</span>
-                  <span className="text-xs text-white/70 leading-snug">
-                    {label}
-                  </span>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>
