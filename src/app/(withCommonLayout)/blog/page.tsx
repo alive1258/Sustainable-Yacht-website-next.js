@@ -31,7 +31,7 @@ export default function BlogPage() {
                 href={`/blog/${article.slug}`}
                 className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm transition hover:shadow-lg"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-16/10 overflow-hidden">
                   <Image
                     src={article.image}
                     alt={article.title}
