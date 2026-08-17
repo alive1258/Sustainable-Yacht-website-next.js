@@ -35,14 +35,9 @@ export const tagTypes: Record<string, string> = {
   about_explore: "about-explore",
   about_stats: "about-stats",
   about_story: "about-story",
-  education: "education",
   services: "services",
   gallery: "gallery",
   client_video_reviews: "client-video-reviews",
-  chambers: "chambers",
-  appointments: "appointments",
-  prescriptions: "prescriptions",
-  chief_complaints: "chief-complaints",
 };
 
 export const tagTypesList: string[] = [
@@ -82,12 +77,7 @@ export const tagTypesList: string[] = [
   tagTypes.about_explore,
   tagTypes.about_stats,
   tagTypes.about_story,
-  tagTypes.education,
   tagTypes.services,
   tagTypes.gallery,
   tagTypes.client_video_reviews,
-  tagTypes.chambers,
-  tagTypes.appointments,
-  tagTypes.prescriptions,
-  tagTypes.chief_complaints,
 ];
