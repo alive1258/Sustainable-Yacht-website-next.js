@@ -63,3 +63,9 @@ export interface BookingPaymentsResponse {
   message: string;
   data: PaymentItem[];
 }
+
+export interface VerifySessionResponse {
+  success: boolean;
+  message: string;
+  data: { status: PaymentStatus };
+}

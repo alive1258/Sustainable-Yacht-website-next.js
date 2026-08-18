@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -14,12 +15,14 @@ import {
   Mail,
   Phone,
   Printer,
+  RefreshCw,
   Ship,
   Users,
 } from "lucide-react";
 import {
   useCreateCheckoutSessionMutation,
   useGetPaymentsByBookingQuery,
+  useVerifyCheckoutSessionMutation,
 } from "@/src/redux/api/paymentApi";
 import { useGetBookingByIdQuery } from "@/src/redux/api/bookingApi";
 import type { ApiError } from "@/src/types/authType";
@@ -55,8 +58,9 @@ function money(currency: string, amount: number | string): string {
 const BookingConfirmation = () => {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("bookingId");
+  const sessionId = searchParams.get("session_id");
 
-  const { data, isLoading } = useGetBookingByIdQuery(bookingId as string, {
+  const { data, isLoading, refetch } = useGetBookingByIdQuery(bookingId as string, {
     skip: !bookingId,
   });
 
@@ -69,6 +73,38 @@ const BookingConfirmation = () => {
     skip: !bookingId || isConfirmed,
     pollingInterval: 3000,
   });
+
+  // Webhooks require Stripe to be able to reach this server (a public URL,
+  // or the Stripe CLI tunnel in local dev). As soon as we're back here with
+  // a session_id, actively verify the session against Stripe ourselves
+  // instead of only waiting on the webhook — self-heals local dev and any
+  // delayed/missed webhook delivery in production too.
+  const [verifySession, { isLoading: isVerifying }] =
+    useVerifyCheckoutSessionMutation();
+  const hasVerifiedRef = useRef(false);
+  const [showManualCheck, setShowManualCheck] = useState(false);
+
+  useEffect(() => {
+    if (!sessionId || isConfirmed || hasVerifiedRef.current) return;
+    hasVerifiedRef.current = true;
+    verifySession(sessionId).catch(() => {
+      // Swallow — polling and the manual "Check Again" button remain as
+      // fallbacks, and a failed sync here shouldn't crash the page.
+    });
+  }, [sessionId, isConfirmed, verifySession]);
+
+  useEffect(() => {
+    if (isConfirmed) return;
+    const timer = setTimeout(() => setShowManualCheck(true), 10000);
+    return () => clearTimeout(timer);
+  }, [isConfirmed]);
+
+  const handleCheckAgain = () => {
+    if (sessionId) {
+      verifySession(sessionId).catch(() => undefined);
+    }
+    refetch();
+  };
 
   const { data: paymentsData, isLoading: isLoadingPayments } =
     useGetPaymentsByBookingQuery(bookingId as string, {
@@ -138,6 +174,34 @@ const BookingConfirmation = () => {
               Stripe is finalizing your payment — this page will update
               automatically in a few seconds.
             </p>
+            {showManualCheck && (
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <p className="max-w-sm text-sm text-brand-900/50">
+                  Taking longer than usual? You can check the status directly,
+                  or find it in your bookings dashboard.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleCheckAgain}
+                    disabled={isVerifying}
+                    className="inline-flex items-center gap-2 rounded-lg bg-gold-500 px-5 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-gold-400 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <RefreshCw
+                      size={15}
+                      className={isVerifying ? "animate-spin" : ""}
+                    />
+                    {isVerifying ? "Checking…" : "Check Again"}
+                  </button>
+                  <Link
+                    href="/dashboard/bookings"
+                    className="inline-flex items-center gap-2 rounded-lg border border-brand-900/10 px-5 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-brand-50"
+                  >
+                    View My Bookings
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="mx-auto max-w-4xl">

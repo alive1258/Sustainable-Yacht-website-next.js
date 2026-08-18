@@ -6,6 +6,7 @@ import {
   CreateCheckoutSessionPayload,
   PaymentPaginatedResponse,
   PaymentQueryParams,
+  VerifySessionResponse,
 } from "@/src/types/paymentType";
 
 const PAYMENTS_URL = "/payments";
@@ -53,6 +54,17 @@ export const paymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.payments],
     }),
+
+    // 5. VERIFY CHECKOUT SESSION (force-sync against Stripe — fallback for
+    // when the webhook hasn't landed, e.g. local dev without a public URL)
+    verifyCheckoutSession: builder.mutation<VerifySessionResponse, string>({
+      query: (sessionId) => ({
+        url: `${PAYMENTS_URL}/verify-session`,
+        method: "GET",
+        params: { session_id: sessionId },
+      }),
+      invalidatesTags: [tagTypes.payments, tagTypes.bookings],
+    }),
   }),
 });
 
@@ -61,4 +73,5 @@ export const {
   useGetMyPaymentsQuery,
   useGetPaymentsByBookingQuery,
   useGetAllPaymentsQuery,
+  useVerifyCheckoutSessionMutation,
 } = paymentApi;
