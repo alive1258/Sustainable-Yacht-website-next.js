@@ -31,7 +31,7 @@ export default async function YachtsPage({ searchParams }: YachtsPageProps) {
         eyebrow="Our Fleet"
         title="Sixteen Yachts. One Standard of Sustainable Luxury."
         subtitle="Every yacht in the Eco Yachts fleet is inspected, eco-certified, and crewed for a charter that's as easy on the water as it is on you."
-        image="/images/yachts/eco-voyager.jpg"
+        image="/images/yachts/eco-dawn.jpg"
         alt="Eco Voyager charter yacht underway"
       />
 

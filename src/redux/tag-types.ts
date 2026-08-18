@@ -41,6 +41,7 @@ export const tagTypes: Record<string, string> = {
   client_video_reviews: "client-video-reviews",
   bookings: "bookings",
   payments: "payments",
+  chat: "chat",
 };
 
 export const tagTypesList: string[] = [
@@ -86,4 +87,5 @@ export const tagTypesList: string[] = [
   tagTypes.client_video_reviews,
   tagTypes.bookings,
   tagTypes.payments,
+  tagTypes.chat,
 ];

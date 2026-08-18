@@ -3,11 +3,14 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Clock, Phone, Search } from "lucide-react";
+import { ChevronDown, Clock, Phone } from "lucide-react";
 import Logo from "../Logo/Logo";
 import MessageWidget from "../MessageWidget/MessageWidget";
 import MobileBottomNav from "../MobileBottomNav/MobileBottomNav";
 import MobileMenuSheet from "../MobileMenuSheet/MobileMenuSheet";
+import { useAppSelector } from "@/src/redux/hooks";
+import { useChatSocket } from "@/src/hooks/useChatSocket";
+import { useGetMyMessagesQuery } from "@/src/redux/api/chatApi";
 import { CONTACT_PHONE, MENU_ITEMS, OPEN_HOURS } from "./menuItems";
 
 const Navbar: React.FC = () => {
@@ -18,6 +21,18 @@ const Navbar: React.FC = () => {
   const [prevPathname, setPrevPathname] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const pathname = usePathname();
+  const user = useAppSelector((state) => state.auth.user);
+
+  const { data: myMessagesRes, isLoading: isMessagesLoading } = useGetMyMessagesQuery(
+    undefined,
+    { skip: !user },
+  );
+  const chat = useChatSocket({
+    enabled: Boolean(user),
+    role: "customer",
+    isActive: isChatOpen,
+    initialMessages: myMessagesRes?.data,
+  });
 
   /* close any open desktop dropdown / mobile drawer / chat panel whenever
    * the route changes */
@@ -34,16 +49,6 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  /* scroll to the yacht search widget when already on the home page */
-  const handleSearchClick = () => {
-    if (pathname === "/") {
-      document
-        .getElementById("yacht-search")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    setIsOpen(false);
-  };
 
   /* stop body scroll when menu open */
   useEffect(() => {
@@ -177,13 +182,18 @@ const Navbar: React.FC = () => {
             </nav>
 
             <div className="hidden lg:flex items-center gap-4">
-              <button
-                onClick={handleSearchClick}
-                aria-label="Search yachts"
-                className="flex items-center justify-center w-9 h-9 rounded-full text-brand-900 hover:bg-brand-50 transition"
-              >
-                <Search size={18} />
-              </button>
+              {user && (
+                <Link
+                  href="/my-bookings"
+                  className={`text-sm font-medium transition ${
+                    pathname.startsWith("/my-bookings")
+                      ? "text-brand-600"
+                      : "text-brand-900 hover:text-brand-600"
+                  }`}
+                >
+                  My Booking
+                </Link>
+              )}
               <Link
                 href="/yachts"
                 className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-700 transition"
@@ -212,12 +222,21 @@ const Navbar: React.FC = () => {
         isOpen={isChatOpen}
         onToggle={() => setIsChatOpen((prev) => !prev)}
         onClose={() => setIsChatOpen(false)}
+        isLoggedIn={Boolean(user)}
+        isHistoryLoading={isMessagesLoading}
+        messages={chat.messages}
+        connected={chat.connected}
+        otherPartyTyping={chat.otherPartyTyping}
+        unreadCount={chat.unreadCount}
+        onSend={chat.sendMessage}
+        onTyping={chat.notifyTyping}
       />
       <MobileBottomNav
         isChatOpen={isChatOpen}
         onToggleChat={() => setIsChatOpen((prev) => !prev)}
         isMenuOpen={isOpen}
         onToggleMenu={() => setIsOpen((prev) => !prev)}
+        unreadChatCount={chat.unreadCount}
       />
     </>
   );

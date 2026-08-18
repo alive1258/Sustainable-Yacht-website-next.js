@@ -108,6 +108,7 @@ interface MobileBottomNavProps {
   onToggleChat: () => void;
   isMenuOpen: boolean;
   onToggleMenu: () => void;
+  unreadChatCount?: number;
 }
 
 const MobileBottomNav = ({
@@ -115,6 +116,7 @@ const MobileBottomNav = ({
   onToggleChat,
   isMenuOpen,
   onToggleMenu,
+  unreadChatCount = 0,
 }: MobileBottomNavProps) => {
   const pathname = usePathname();
 
@@ -135,7 +137,14 @@ const MobileBottomNav = ({
           {isChatOpen ? (
             <X className="text-white" size={22} fill="none" />
           ) : (
-            <MessageCircle size={22} className="text-white" fill="none" />
+            <>
+              <MessageCircle size={22} className="text-white" fill="none" />
+              {unreadChatCount > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white ring-2 ring-neutral-900">
+                  {unreadChatCount > 9 ? "9+" : unreadChatCount}
+                </span>
+              )}
+            </>
           )}
         </button>
 

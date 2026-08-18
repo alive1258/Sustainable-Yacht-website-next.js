@@ -10,10 +10,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { IOrder } from "@/src/redux/api/orderApi";
+import type { PaymentItem } from "@/src/types/paymentType";
 
 interface RevenueTrendChartProps {
-  orders: IOrder[];
+  payments: PaymentItem[];
+  currency: string;
   days?: number;
 }
 
@@ -23,24 +24,27 @@ function CustomTooltip({
   active,
   payload,
   label,
+  currency,
 }: {
   active?: boolean;
   payload?: { value: number }[];
   label?: string;
+  currency: string;
 }) {
   if (!active || !payload || payload.length === 0) return null;
   return (
     <div className="rounded-lg border border-black/10 bg-white px-3 py-2 shadow-md">
       <p className="text-xs font-semibold text-gray-500">{label}</p>
       <p className="text-sm font-bold text-gray-900">
-        ৳{payload[0].value.toLocaleString()}
+        {currency} {payload[0].value.toLocaleString()}
       </p>
     </div>
   );
 }
 
 export default function RevenueTrendChart({
-  orders,
+  payments,
+  currency,
   days = 14,
 }: RevenueTrendChartProps) {
   const data = useMemo(() => {
@@ -61,14 +65,16 @@ export default function RevenueTrendChart({
     }
 
     const byDate = new Map(buckets.map((b) => [b.date, b]));
-    orders.forEach((order) => {
-      const key = new Date(order.created_at).toISOString().slice(0, 10);
-      const bucket = byDate.get(key);
-      if (bucket) bucket.revenue += Number(order.total_amount) || 0;
-    });
+    payments
+      .filter((p) => p.status === "succeeded")
+      .forEach((payment) => {
+        const key = new Date(payment.created_at).toISOString().slice(0, 10);
+        const bucket = byDate.get(key);
+        if (bucket) bucket.revenue += Number(payment.amount) || 0;
+      });
 
     return buckets;
-  }, [orders, days]);
+  }, [payments, days]);
 
   const hasRevenue = data.some((d) => d.revenue > 0);
 
@@ -77,7 +83,7 @@ export default function RevenueTrendChart({
       <div className="flex-1 min-h-55 flex flex-col items-center justify-center text-center p-8">
         <p className="text-gray-900 font-bold text-sm">No revenue yet</p>
         <p className="text-xs text-gray-500 mt-1">
-          Revenue from the last {days} days will appear here.
+          Revenue collected in the last {days} days will appear here.
         </p>
       </div>
     );
@@ -115,7 +121,10 @@ export default function RevenueTrendChart({
               v >= 1000 ? `${(v / 1000).toFixed(0)}k` : `${v}`
             }
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#c3c2b7" }} />
+          <Tooltip
+            content={<CustomTooltip currency={currency} />}
+            cursor={{ stroke: "#c3c2b7" }}
+          />
           <Area
             type="monotone"
             dataKey="revenue"

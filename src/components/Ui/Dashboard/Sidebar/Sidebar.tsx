@@ -20,6 +20,7 @@ import {
   LayoutDashboard,
   Leaf,
   MapPin,
+  MessageCircle,
   Milestone,
   Newspaper,
   PanelTop,
@@ -95,6 +96,12 @@ const MENU_ITEMS: MenuItem[] = [
     href: "/dashboard/payments/all-payments",
     icon: CreditCard,
     menuKey: "payments",
+  },
+  {
+    label: "Support Chat",
+    href: "/dashboard/support-chat",
+    icon: MessageCircle,
+    menuKey: "support-chat",
   },
   {
     label: "Video Gallary",
@@ -349,7 +356,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {/* Header / Logo */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
         <span className="md:font-bold md:text-xl text-base font-semibold text-emerald-600">
-          DDT Dashboard
+          Yachts Dashboard
         </span>
 
         {/* Mobile Close Button */}

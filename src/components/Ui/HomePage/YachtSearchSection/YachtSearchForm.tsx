@@ -39,7 +39,7 @@ const YachtSearchForm = ({ regions }: YachtSearchFormProps) => {
   return (
     <form
       onSubmit={handleSearch}
-      className="mt-10 -mb-24 md:-mb-28 grid gap-4 rounded-2xl bg-white p-6 shadow-2xl sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_auto] lg:items-end"
+      className="relative z-10 mt-10 -mb-24 md:-mb-36 grid gap-4 rounded-2xl bg-gray-200 p-6 shadow-md sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_auto] lg:items-end"
     >
       <label className="block">
         <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-900/60">

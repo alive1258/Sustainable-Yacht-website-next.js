@@ -54,13 +54,13 @@ const DestinationsSection = async () => {
               key={destination.id}
               className="group overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative aspect-square overflow-hidden">
+              <div className="relative  overflow-hidden">
                 <Image
                   src={destination.image || FALLBACK_IMAGE}
                   alt={destination.name}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className=" transition-transform duration-500 group-hover:scale-105"
+                  height={600}
+                  width={600}
+                  className="w-full transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="p-5">
