@@ -1,23 +1,20 @@
 "use client";
 
 import {
-  ShieldCheck,
   Mail,
   Smartphone,
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
+import Logo from "@/src/components/Shared/Logo/Logo";
 
 const OtpPage = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {/* Logo */}
-        <div className="flex justify-center items-center gap-2 text-emerald-600">
-          <ShieldCheck className="h-10 w-10" />
-          <span className="text-3xl font-extrabold tracking-tight text-slate-950">
-            Medico<span className="text-emerald-500">.</span>
-          </span>
+        <div className="flex justify-center">
+          <Logo variant="dark" size="lg" />
         </div>
         <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-slate-800">
           Verify Your Identity
