@@ -349,7 +349,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {/* Header / Logo */}
       <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
         <span className="md:font-bold md:text-xl text-base font-semibold text-emerald-600">
-          DDT Dashboard
+          Yachts Dashboard
         </span>
 
         {/* Mobile Close Button */}

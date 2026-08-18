@@ -10,17 +10,18 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Product } from "@/src/types/productsType";
+import type { BookingItem } from "@/src/types/bookingType";
 
-interface ProductsByCategoryChartProps {
-  products: Product[];
+interface TopYachtsChartProps {
+  bookings: BookingItem[];
 }
 
-// Revenue trend already owns the sequential blue hue; a second magnitude
-// chart on the same screen takes the next categorical slot (orange) as its
-// own one-hue ramp, per the sequential-color rule.
+// Revenue Trend already owns the sequential blue hue; this is the second
+// magnitude chart on the same screen, so it takes the next categorical slot
+// (orange) as its own one-hue ramp — same rule the old products-by-category
+// chart used.
 const CHART_ORANGE = "#eb6834";
-const MAX_CATEGORIES = 8;
+const MAX_YACHTS = 8;
 
 function CustomTooltip({
   active,
@@ -36,41 +37,32 @@ function CustomTooltip({
     <div className="rounded-lg border border-black/10 bg-white px-3 py-2 shadow-md">
       <p className="text-xs font-semibold text-gray-500">{label}</p>
       <p className="text-sm font-bold text-gray-900">
-        {payload[0].value} products
+        {payload[0].value} bookings
       </p>
     </div>
   );
 }
 
-export default function ProductsByCategoryChart({
-  products,
-}: ProductsByCategoryChartProps) {
+export default function TopYachtsChart({ bookings }: TopYachtsChartProps) {
   const data = useMemo(() => {
     const counts = new Map<string, number>();
-    products.forEach((product) => {
-      const name = product.category?.name || "Uncategorized";
+    bookings.forEach((booking) => {
+      const name = booking.yacht?.name || "Unknown Yacht";
       counts.set(name, (counts.get(name) || 0) + 1);
     });
 
-    const sorted = Array.from(counts.entries())
+    return Array.from(counts.entries())
       .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count);
+      .sort((a, b) => b.count - a.count)
+      .slice(0, MAX_YACHTS);
+  }, [bookings]);
 
-    if (sorted.length <= MAX_CATEGORIES) return sorted;
-
-    const top = sorted.slice(0, MAX_CATEGORIES - 1);
-    const otherCount = sorted
-      .slice(MAX_CATEGORIES - 1)
-      .reduce((sum, c) => sum + c.count, 0);
-    return [...top, { name: "Other", count: otherCount }];
-  }, [products]);
-
-  if (products.length === 0) {
+  if (bookings.length === 0) {
     return (
       <div className="h-64 flex flex-col items-center justify-center text-center p-6">
-        <p className="text-gray-900 font-bold text-sm">No products yet</p>
+        <p className="text-gray-900 font-bold text-sm">No bookings yet</p>
         <p className="text-xs text-gray-500 mt-1">
-          Product distribution by category will appear here.
+          Your most-booked yachts will appear here.
         </p>
       </div>
     );

@@ -11,20 +11,21 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { IOrder } from "@/src/redux/api/orderApi";
+import type { BookingItem } from "@/src/types/bookingType";
 
-interface OrderStatusChartProps {
-  orders: IOrder[];
+interface BookingStatusChartProps {
+  bookings: BookingItem[];
 }
 
-// Order status is genuine application state, so it uses the reserved status
-// palette (good/warning/critical) rather than generic categorical hues.
-// "Processing" isn't inherently good/bad/critical, so it takes the
-// sequential-chart blue instead of borrowing a status role it doesn't own.
+// Mirrors the badge colors already used on the Bookings pages (AllBookings /
+// MyBookings), so a status reads the same color here as it does everywhere
+// else in the dashboard: pending = warning, confirmed = good, cancelled =
+// critical. "Completed" isn't a status-palette role, so it keeps the
+// categorical blue those pages already paint it with.
 const STATUS_CONFIG = [
   { key: "pending", label: "Pending", color: "#fab219" },
-  { key: "processing", label: "Processing", color: "#2a78d6" },
-  { key: "delivered", label: "Delivered", color: "#0ca30c" },
+  { key: "confirmed", label: "Confirmed", color: "#0ca30c" },
+  { key: "completed", label: "Completed", color: "#2a78d6" },
   { key: "cancelled", label: "Cancelled", color: "#d03b3b" },
 ];
 
@@ -40,16 +41,16 @@ function CustomTooltip({
   return (
     <div className="rounded-lg border border-black/10 bg-white px-3 py-2 shadow-md">
       <p className="text-xs font-semibold text-gray-500">{label}</p>
-      <p className="text-sm font-bold text-gray-900">{count} orders</p>
+      <p className="text-sm font-bold text-gray-900">{count} bookings</p>
     </div>
   );
 }
 
-export default function OrderStatusChart({ orders }: OrderStatusChartProps) {
+export default function BookingStatusChart({ bookings }: BookingStatusChartProps) {
   const data = useMemo(() => {
     const counts: Record<string, number> = {};
-    orders.forEach((order) => {
-      const status = (order.order_status || "pending").toLowerCase();
+    bookings.forEach((booking) => {
+      const status = (booking.status || "pending").toLowerCase();
       counts[status] = (counts[status] || 0) + 1;
     });
 
@@ -57,14 +58,14 @@ export default function OrderStatusChart({ orders }: OrderStatusChartProps) {
       ...s,
       count: counts[s.key] || 0,
     }));
-  }, [orders]);
+  }, [bookings]);
 
-  if (orders.length === 0) {
+  if (bookings.length === 0) {
     return (
       <div className="h-55 flex flex-col items-center justify-center text-center p-6">
-        <p className="text-gray-900 font-bold text-sm">No orders yet</p>
+        <p className="text-gray-900 font-bold text-sm">No bookings yet</p>
         <p className="text-xs text-gray-500 mt-1">
-          Order status breakdown will appear here.
+          Booking status breakdown will appear here.
         </p>
       </div>
     );
