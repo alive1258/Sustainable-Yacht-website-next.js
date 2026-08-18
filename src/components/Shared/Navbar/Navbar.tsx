@@ -9,6 +9,8 @@ import MessageWidget from "../MessageWidget/MessageWidget";
 import MobileBottomNav from "../MobileBottomNav/MobileBottomNav";
 import MobileMenuSheet from "../MobileMenuSheet/MobileMenuSheet";
 import { useAppSelector } from "@/src/redux/hooks";
+import { useChatSocket } from "@/src/hooks/useChatSocket";
+import { useGetMyMessagesQuery } from "@/src/redux/api/chatApi";
 import { CONTACT_PHONE, MENU_ITEMS, OPEN_HOURS } from "./menuItems";
 
 const Navbar: React.FC = () => {
@@ -20,6 +22,17 @@ const Navbar: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const pathname = usePathname();
   const user = useAppSelector((state) => state.auth.user);
+
+  const { data: myMessagesRes, isLoading: isMessagesLoading } = useGetMyMessagesQuery(
+    undefined,
+    { skip: !user },
+  );
+  const chat = useChatSocket({
+    enabled: Boolean(user),
+    role: "customer",
+    isActive: isChatOpen,
+    initialMessages: myMessagesRes?.data,
+  });
 
   /* close any open desktop dropdown / mobile drawer / chat panel whenever
    * the route changes */
@@ -209,12 +222,21 @@ const Navbar: React.FC = () => {
         isOpen={isChatOpen}
         onToggle={() => setIsChatOpen((prev) => !prev)}
         onClose={() => setIsChatOpen(false)}
+        isLoggedIn={Boolean(user)}
+        isHistoryLoading={isMessagesLoading}
+        messages={chat.messages}
+        connected={chat.connected}
+        otherPartyTyping={chat.otherPartyTyping}
+        unreadCount={chat.unreadCount}
+        onSend={chat.sendMessage}
+        onTyping={chat.notifyTyping}
       />
       <MobileBottomNav
         isChatOpen={isChatOpen}
         onToggleChat={() => setIsChatOpen((prev) => !prev)}
         isMenuOpen={isOpen}
         onToggleMenu={() => setIsOpen((prev) => !prev)}
+        unreadChatCount={chat.unreadCount}
       />
     </>
   );

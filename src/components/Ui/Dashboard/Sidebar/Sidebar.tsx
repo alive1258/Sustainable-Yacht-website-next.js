@@ -20,6 +20,7 @@ import {
   LayoutDashboard,
   Leaf,
   MapPin,
+  MessageCircle,
   Milestone,
   Newspaper,
   PanelTop,
@@ -95,6 +96,12 @@ const MENU_ITEMS: MenuItem[] = [
     href: "/dashboard/payments/all-payments",
     icon: CreditCard,
     menuKey: "payments",
+  },
+  {
+    label: "Support Chat",
+    href: "/dashboard/support-chat",
+    icon: MessageCircle,
+    menuKey: "support-chat",
   },
   {
     label: "Video Gallary",
