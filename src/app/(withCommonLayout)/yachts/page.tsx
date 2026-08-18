@@ -11,7 +11,18 @@ export const metadata: Metadata = {
     "Browse the full Eco Yachts fleet — eco-certified sailing and motor yachts for charter, from intimate 6-guest boats to 14-guest flagships.",
 };
 
-export default function YachtsPage() {
+interface YachtsPageProps {
+  searchParams: Promise<{
+    region?: string;
+    guests_min?: string;
+    date?: string;
+  }>;
+}
+
+export default async function YachtsPage({ searchParams }: YachtsPageProps) {
+  const { region, guests_min, date } = await searchParams;
+  const guestsMin = guests_min ? Number(guests_min) : undefined;
+
   return (
     <>
       <PageHero
@@ -22,7 +33,11 @@ export default function YachtsPage() {
         alt="Eco Voyager charter yacht underway"
       />
 
-      <FleetGrid />
+      <FleetGrid
+        region={region}
+        guestsMin={Number.isFinite(guestsMin) ? guestsMin : undefined}
+        date={date}
+      />
 
       <InnovationConcepts />
 

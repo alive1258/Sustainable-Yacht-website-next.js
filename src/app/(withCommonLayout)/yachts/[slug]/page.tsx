@@ -11,21 +11,53 @@ import LocationRates from "@/src/components/Ui/YachtDetail/LocationRates";
 import YachtSidebar from "@/src/components/Ui/YachtDetail/YachtSidebar";
 import RelatedYachts from "@/src/components/Ui/YachtDetail/RelatedYachts";
 import YachtCta from "@/src/components/Ui/YachtDetail/YachtCta";
-import { YACHT_FLEET, getYachtBySlug } from "@/src/utils/data/yachts";
+import type { ApiResponse } from "@/src/types/axios";
+import type { YachtAdminItem } from "@/src/types/yachtAdminType";
+import { mapYachtAdminItemToYacht } from "@/src/utils/mappers/yacht";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export function generateStaticParams() {
-  return YACHT_FLEET.map((yacht) => ({ slug: yacht.slug }));
+async function getYachtBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/yachts/slug/${slug}`,
+      { next: { revalidate: 60 } },
+    );
+
+    if (!res.ok) return null;
+
+    const body: ApiResponse<YachtAdminItem> = await res.json();
+    return body.data ? mapYachtAdminItemToYacht(body.data) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getOtherYachts(excludeSlug: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/yachts/active`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!res.ok) return [];
+
+    const body: ApiResponse<YachtAdminItem[]> = await res.json();
+    return (body.data ?? [])
+      .filter((item) => item.slug !== excludeSlug)
+      .slice(0, 3)
+      .map(mapYachtAdminItemToYacht);
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const yacht = getYachtBySlug(slug);
+  const yacht = await getYachtBySlug(slug);
 
   if (!yacht) {
     return { title: "Yacht Not Found" };
@@ -44,16 +76,13 @@ export async function generateMetadata({
 
 export default async function YachtDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const yacht = getYachtBySlug(slug);
+  const yacht = await getYachtBySlug(slug);
 
   if (!yacht) {
     notFound();
   }
 
-  const otherYachts = YACHT_FLEET.filter((y) => y.slug !== yacht.slug).slice(
-    0,
-    3,
-  );
+  const otherYachts = await getOtherYachts(yacht.slug);
 
   return (
     <>
