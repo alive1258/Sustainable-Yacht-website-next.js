@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import {
-  ArrowRight,
   CalendarDays,
   CheckCircle2,
   Clock,
@@ -14,7 +13,6 @@ import {
   Loader2,
   Mail,
   Phone,
-  Printer,
   RefreshCw,
   Ship,
   Users,
@@ -60,9 +58,12 @@ const BookingConfirmation = () => {
   const bookingId = searchParams.get("bookingId");
   const sessionId = searchParams.get("session_id");
 
-  const { data, isLoading, refetch } = useGetBookingByIdQuery(bookingId as string, {
-    skip: !bookingId,
-  });
+  const { data, isLoading, refetch } = useGetBookingByIdQuery(
+    bookingId as string,
+    {
+      skip: !bookingId,
+    },
+  );
 
   const booking = data?.data;
   const isConfirmed = booking?.payment_status !== "unpaid";
@@ -154,8 +155,8 @@ const BookingConfirmation = () => {
               We can&apos;t find that booking
             </h1>
             <p className="mt-2 max-w-md text-brand-900/60">
-              If you completed a payment, check your dashboard — it may take
-              a moment to appear.
+              If you completed a payment, check your dashboard — it may take a
+              moment to appear.
             </p>
             <Link
               href="/dashboard/bookings"
@@ -260,7 +261,8 @@ const BookingConfirmation = () => {
                 <div className="hidden shrink-0 gap-2 sm:flex">
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-bold capitalize ${
-                      STATUS_BADGE[booking.status] || "bg-gray-100 text-gray-600"
+                      STATUS_BADGE[booking.status] ||
+                      "bg-gray-100 text-gray-600"
                     }`}
                   >
                     {booking.status}
@@ -285,19 +287,24 @@ const BookingConfirmation = () => {
                     </h3>
                     <div className="space-y-2.5 text-sm">
                       <div className="flex items-center gap-2.5">
-                        <CalendarDays size={15} className="shrink-0 text-brand-600" />
+                        <CalendarDays
+                          size={15}
+                          className="shrink-0 text-brand-600"
+                        />
                         <span className="text-brand-900/70">
                           {booking.check_in} → {booking.check_out}
                           <span className="text-brand-900/40">
                             {" "}
-                            ({booking.nights} {booking.nights === 1 ? "night" : "nights"})
+                            ({booking.nights}{" "}
+                            {booking.nights === 1 ? "night" : "nights"})
                           </span>
                         </span>
                       </div>
                       <div className="flex items-center gap-2.5">
                         <Users size={15} className="shrink-0 text-brand-600" />
                         <span className="text-brand-900/70">
-                          {booking.guests} {booking.guests === 1 ? "guest" : "guests"}
+                          {booking.guests}{" "}
+                          {booking.guests === 1 ? "guest" : "guests"}
                         </span>
                       </div>
                     </div>
@@ -319,7 +326,10 @@ const BookingConfirmation = () => {
                       </div>
                       {booking.guest_phone && (
                         <div className="flex items-center gap-2.5">
-                          <Phone size={15} className="shrink-0 text-brand-600" />
+                          <Phone
+                            size={15}
+                            className="shrink-0 text-brand-600"
+                          />
                           <span className="text-brand-900/70">
                             {booking.guest_phone}
                           </span>
@@ -343,7 +353,8 @@ const BookingConfirmation = () => {
                     <div className="space-y-2 rounded-xl border border-brand-900/10 bg-brand-50/40 p-4 text-sm">
                       <div className="flex justify-between text-brand-900/70">
                         <span>
-                          {booking.nights} {booking.nights === 1 ? "night" : "nights"} ×{" "}
+                          {booking.nights}{" "}
+                          {booking.nights === 1 ? "night" : "nights"} ×{" "}
                           {money(booking.currency, booking.price_per_night)}
                         </span>
                         <span className="font-semibold text-brand-900">
@@ -373,7 +384,9 @@ const BookingConfirmation = () => {
                         className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 px-4 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-gold-400 disabled:cursor-not-allowed disabled:opacity-60 print:hidden"
                       >
                         <CreditCard size={15} />
-                        {isPayingBalance ? "Redirecting…" : "Pay Remaining Balance"}
+                        {isPayingBalance
+                          ? "Redirecting…"
+                          : "Pay Remaining Balance"}
                       </button>
                     )}
                   </div>
@@ -383,7 +396,9 @@ const BookingConfirmation = () => {
                       Payment History
                     </h3>
                     {isLoadingPayments ? (
-                      <p className="text-sm text-brand-900/50">Loading payments…</p>
+                      <p className="text-sm text-brand-900/50">
+                        Loading payments…
+                      </p>
                     ) : payments.length ? (
                       <div className="space-y-2">
                         {payments.map((p) => (
@@ -433,25 +448,6 @@ const BookingConfirmation = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* ACTIONS */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 print:hidden">
-              <Link
-                href="/dashboard/bookings"
-                className="inline-flex items-center gap-2 rounded-lg bg-gold-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-gold-400"
-              >
-                View My Bookings
-                <ArrowRight size={16} />
-              </Link>
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-2 rounded-lg border border-brand-900/10 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-brand-50"
-              >
-                <Printer size={16} />
-                Print / Save Receipt
-              </button>
             </div>
           </div>
         )}
