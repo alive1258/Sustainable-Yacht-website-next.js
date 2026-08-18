@@ -1,38 +1,57 @@
+import { Suspense } from "react";
 import DestinationsSection from "../DestinationsSection/DestinationsSection";
+import DestinationsSectionSkeleton from "../DestinationsSection/DestinationsSectionSkeleton";
 import ExperiencesSection from "../ExperiencesSection/ExperiencesSection";
+import ExperiencesSectionSkeleton from "../ExperiencesSection/ExperiencesSectionSkeleton";
 import FaqSection from "../FaqSection/FaqSection";
 import FeaturedYachtsSection from "../FeaturedYachtsSection/FeaturedYachtsSection";
+import FeaturedYachtsSectionSkeleton from "../FeaturedYachtsSection/FeaturedYachtsSectionSkeleton";
 import HeroSection from "../HeroSection/HeroSection";
+import HeroSectionSkeleton from "../HeroSection/HeroSectionSkeleton";
 import InsightsSection from "../InsightsSection/InsightsSection";
 import NewsletterSection from "../NewsletterSection/NewsletterSection";
 import PromiseSection from "../PromiseSection/PromiseSection";
 import SustainabilitySection from "../SustainabilitySection/SustainabilitySection";
+import SustainabilitySectionSkeleton from "../SustainabilitySection/SustainabilitySectionSkeleton";
 import TestimonialsSection from "../TestimonialsSection/TestimonialsSection";
 import VideoSection from "../VideoSection/VideoSection";
 import YachtSearchSection from "../YachtSearchSection/YachtSearchSection";
+import YachtSearchSectionSkeleton from "../YachtSearchSection/YachtSearchSectionSkeleton";
 
 const RootHomePage = () => {
   return (
     <>
       <div id="home" className="scroll-mt-[100px]">
-        <HeroSection />
+        <Suspense fallback={<HeroSectionSkeleton />}>
+          <HeroSection />
+        </Suspense>
       </div>
 
-      <SustainabilitySection />
+      <Suspense fallback={<SustainabilitySectionSkeleton />}>
+        <SustainabilitySection />
+      </Suspense>
 
       <div id="experiences" className="scroll-mt-[100px]">
-        <ExperiencesSection />
+        <Suspense fallback={<ExperiencesSectionSkeleton />}>
+          <ExperiencesSection />
+        </Suspense>
       </div>
 
       <div id="yacht-search" className="scroll-mt-[100px]">
-        <YachtSearchSection />
+        <Suspense fallback={<YachtSearchSectionSkeleton />}>
+          <YachtSearchSection />
+        </Suspense>
       </div>
 
-      <FeaturedYachtsSection />
+      <Suspense fallback={<FeaturedYachtsSectionSkeleton />}>
+        <FeaturedYachtsSection />
+      </Suspense>
 
       <VideoSection />
 
-      <DestinationsSection />
+      <Suspense fallback={<DestinationsSectionSkeleton />}>
+        <DestinationsSection />
+      </Suspense>
 
       <PromiseSection />
 
