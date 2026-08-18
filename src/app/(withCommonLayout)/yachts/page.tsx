@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ArrowRight } from "lucide-react";
 import PageHero from "@/src/components/Shared/PageHero/PageHero";
 import FleetGrid from "@/src/components/Ui/YachtsPage/FleetGrid/FleetGrid";
+import FleetGridSkeleton from "@/src/components/Ui/YachtsPage/FleetGrid/FleetGridSkeleton";
 import InnovationConcepts from "@/src/components/Ui/YachtsPage/InnovationConcepts/InnovationConcepts";
 import LifeAboardGallery from "@/src/components/Ui/YachtsPage/LifeAboardGallery/LifeAboardGallery";
 
@@ -33,11 +35,13 @@ export default async function YachtsPage({ searchParams }: YachtsPageProps) {
         alt="Eco Voyager charter yacht underway"
       />
 
-      <FleetGrid
-        region={region}
-        guestsMin={Number.isFinite(guestsMin) ? guestsMin : undefined}
-        date={date}
-      />
+      <Suspense fallback={<FleetGridSkeleton />}>
+        <FleetGrid
+          region={region}
+          guestsMin={Number.isFinite(guestsMin) ? guestsMin : undefined}
+          date={date}
+        />
+      </Suspense>
 
       <InnovationConcepts />
 
