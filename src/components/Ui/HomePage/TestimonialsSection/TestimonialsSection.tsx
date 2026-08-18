@@ -1,21 +1,34 @@
+import Image from "next/image";
 import { Quote, Star, User } from "lucide-react";
-import type { GuestTestimonial } from "@/src/types/guestTestimonialType";
-import { TESTIMONIALS } from "@/src/utils/data/testimonials";
+import type { ApiResponse } from "@/src/types/axios";
+import type { TestimonialItem } from "@/src/types/testimonialType";
 
-const MID = Math.ceil(TESTIMONIALS.length / 2);
-const ROW_1 = TESTIMONIALS.slice(0, MID);
-const ROW_2 = TESTIMONIALS.slice(MID);
+async function getActiveTestimonials(): Promise<TestimonialItem[]> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/testimonials/active`,
+      { next: { revalidate: 60 } },
+    );
+
+    if (!res.ok) return [];
+
+    const body: ApiResponse<TestimonialItem[]> = await res.json();
+    return body.data ?? [];
+  } catch {
+    return [];
+  }
+}
 
 const TestimonialCard = ({
   testimonial,
 }: {
-  testimonial: GuestTestimonial;
+  testimonial: TestimonialItem;
 }) => (
   <div className="w-[220px] shrink-0 rounded-2xl border border-brand-900/10 bg-white p-6 shadow-sm sm:w-[300px]">
     <Quote size={22} className="text-brand-200" />
 
     <p className="mt-4 line-clamp-4 text-sm text-brand-900/70 leading-relaxed">
-      &ldquo;{testimonial.quote}&rdquo;
+      &ldquo;{testimonial.description}&rdquo;
     </p>
 
     <div className="mt-4 flex gap-1 text-gold-500">
@@ -25,12 +38,26 @@ const TestimonialCard = ({
     </div>
 
     <div className="mt-4 flex items-center gap-3 border-t border-brand-900/10 pt-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600">
-        <User size={15} />
-      </span>
+      {testimonial.image ? (
+        <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-brand-100">
+          <Image
+            src={testimonial.image}
+            alt={testimonial.name}
+            fill
+            sizes="36px"
+            className="object-cover"
+          />
+        </span>
+      ) : (
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600">
+          <User size={15} />
+        </span>
+      )}
       <div className="text-left">
         <p className="text-sm font-bold text-brand-900">{testimonial.name}</p>
-        <p className="text-xs text-brand-900/50">{testimonial.location}</p>
+        {testimonial.designation && (
+          <p className="text-xs text-brand-900/50">{testimonial.designation}</p>
+        )}
       </div>
     </div>
   </div>
@@ -40,7 +67,7 @@ const MarqueeRow = ({
   testimonials,
   direction,
 }: {
-  testimonials: GuestTestimonial[];
+  testimonials: TestimonialItem[];
   direction: "left" | "right";
 }) => (
   <div className="testimonial-fade overflow-hidden">
@@ -61,7 +88,15 @@ const MarqueeRow = ({
   </div>
 );
 
-const TestimonialsSection = () => {
+const TestimonialsSection = async () => {
+  const testimonials = await getActiveTestimonials();
+
+  if (testimonials.length === 0) return null;
+
+  const mid = Math.ceil(testimonials.length / 2);
+  const row1 = testimonials.slice(0, mid);
+  const row2 = testimonials.slice(mid);
+
   return (
     <section className="overflow-hidden bg-brand-50/50 py-16 md:py-24">
       <div className="container">
@@ -76,8 +111,8 @@ const TestimonialsSection = () => {
       </div>
 
       <div className="space-y-6">
-        <MarqueeRow testimonials={ROW_1} direction="left" />
-        <MarqueeRow testimonials={ROW_2} direction="right" />
+        <MarqueeRow testimonials={row1} direction="left" />
+        {row2.length > 0 && <MarqueeRow testimonials={row2} direction="right" />}
       </div>
     </section>
   );

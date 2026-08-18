@@ -14,6 +14,7 @@ import PromiseSection from "../PromiseSection/PromiseSection";
 import SustainabilitySection from "../SustainabilitySection/SustainabilitySection";
 import SustainabilitySectionSkeleton from "../SustainabilitySection/SustainabilitySectionSkeleton";
 import TestimonialsSection from "../TestimonialsSection/TestimonialsSection";
+import TestimonialsSectionSkeleton from "../TestimonialsSection/TestimonialsSectionSkeleton";
 import VideoSection from "../VideoSection/VideoSection";
 import YachtSearchSection from "../YachtSearchSection/YachtSearchSection";
 import YachtSearchSectionSkeleton from "../YachtSearchSection/YachtSearchSectionSkeleton";
@@ -55,7 +56,9 @@ const RootHomePage = () => {
 
       <PromiseSection />
 
-      <TestimonialsSection />
+      <Suspense fallback={<TestimonialsSectionSkeleton />}>
+        <TestimonialsSection />
+      </Suspense>
 
       <FaqSection />
 
