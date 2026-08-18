@@ -1,30 +1,31 @@
 import Image from "next/image";
 import { ArrowRight, Send } from "lucide-react";
+import type { ApiResponse } from "@/src/types/axios";
+import type { DestinationItem } from "@/src/types/destinationType";
 
-const DESTINATIONS = [
-  {
-    name: "Greek Islands",
-    description: "Whitewashed villages and crystal Aegean coves.",
-    image: "/images/destinations/santorini.jpg",
-  },
-  {
-    name: "Maldives",
-    description: "Overwater calm above protected coral reefs.",
-    image: "/images/destinations/maldives.jpg",
-  },
-  {
-    name: "Phuket, Thailand",
-    description: "Limestone cliffs and warm Andaman waters.",
-    image: "/images/destinations/phuket.jpg",
-  },
-  {
-    name: "The Bahamas",
-    description: "Shallow turquoise banks and quiet cays.",
-    image: "/images/destinations/bahamas.jpg",
-  },
-];
+const FALLBACK_IMAGE = "/images/destinations/santorini.jpg";
 
-const DestinationsSection = () => {
+async function getActiveDestinations(): Promise<DestinationItem[]> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/destinations/active`,
+      { next: { revalidate: 60 } },
+    );
+
+    if (!res.ok) return [];
+
+    const body: ApiResponse<DestinationItem[]> = await res.json();
+    return body.data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+const DestinationsSection = async () => {
+  const destinations = (await getActiveDestinations()).slice(0, 4);
+
+  if (destinations.length === 0) return null;
+
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container">
@@ -48,14 +49,14 @@ const DestinationsSection = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {DESTINATIONS.map((destination) => (
+          {destinations.map((destination) => (
             <div
-              key={destination.name}
+              key={destination.id}
               className="group overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
               <div className="relative aspect-square overflow-hidden">
                 <Image
-                  src={destination.image}
+                  src={destination.image || FALLBACK_IMAGE}
                   alt={destination.name}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -64,9 +65,11 @@ const DestinationsSection = () => {
               </div>
               <div className="p-5">
                 <h3 className="font-bold text-brand-900">{destination.name}</h3>
-                <p className="mt-1.5 text-sm text-brand-900/60 leading-relaxed">
-                  {destination.description}
-                </p>
+                {destination.description && (
+                  <p className="mt-1.5 text-sm text-brand-900/60 leading-relaxed">
+                    {destination.description}
+                  </p>
+                )}
               </div>
             </div>
           ))}

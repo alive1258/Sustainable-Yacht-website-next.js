@@ -1,14 +1,89 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Ruler, Users } from "lucide-react";
-import { getYachtSummaries } from "@/src/utils/data/yachts";
+import type { ApiResponse } from "@/src/types/axios";
+import type { YachtAdminItem } from "@/src/types/yachtAdminType";
+import { mapYachtAdminItemToSummary } from "@/src/utils/mappers/yacht";
 
-const FLEET = getYachtSummaries();
+export interface FleetGridProps {
+  region?: string;
+  guestsMin?: number;
+  date?: string;
+}
 
-export default function FleetGrid() {
+async function getFleet({ region, guestsMin }: FleetGridProps) {
+  try {
+    const params = new URLSearchParams();
+    if (region) params.set("region", region);
+    if (guestsMin) params.set("guests_min", String(guestsMin));
+
+    const query = params.toString();
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/yachts/active${query ? `?${query}` : ""}`,
+      { next: { revalidate: 60 } },
+    );
+
+    if (!res.ok) return [];
+
+    const body: ApiResponse<YachtAdminItem[]> = await res.json();
+    return (body.data ?? []).map(mapYachtAdminItemToSummary);
+  } catch {
+    return [];
+  }
+}
+
+export default async function FleetGrid({
+  region,
+  guestsMin,
+  date,
+}: FleetGridProps) {
+  const FLEET = await getFleet({ region, guestsMin });
+  const isFiltered = Boolean(region || guestsMin);
+
+  if (FLEET.length === 0) {
+    return (
+      <section className="bg-white py-16 md:py-24">
+        <div className="container text-center">
+          <p className="text-brand-900/60">
+            {isFiltered
+              ? "No yachts match your search. Try a different destination or group size."
+              : "No yachts are available right now. Please check back soon."}
+          </p>
+          {isFiltered && (
+            <Link
+              href="/yachts"
+              className="mt-3 inline-block text-sm font-semibold text-brand-700 hover:text-brand-900 transition"
+            >
+              Clear filters
+            </Link>
+          )}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container">
+        {isFiltered && (
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-brand-50/70 px-5 py-3.5 text-sm text-brand-900/70">
+            <span>
+              Showing {FLEET.length} yacht{FLEET.length === 1 ? "" : "s"}
+              {region ? ` in ${region}` : ""}
+              {guestsMin ? ` for ${guestsMin}+ guests` : ""}
+              {date
+                ? ` — mention your preferred date (${date}) when you inquire`
+                : ""}
+            </span>
+            <Link
+              href="/yachts"
+              className="font-semibold text-brand-700 hover:text-brand-900 transition"
+            >
+              Clear filters
+            </Link>
+          </div>
+        )}
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {FLEET.map((yacht) => (
             <Link

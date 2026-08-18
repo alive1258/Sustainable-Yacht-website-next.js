@@ -1,11 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Ruler, Users } from "lucide-react";
-import { getYachtSummaries } from "@/src/utils/data/yachts";
+import type { ApiResponse } from "@/src/types/axios";
+import type { YachtAdminItem } from "@/src/types/yachtAdminType";
+import { mapYachtAdminItemToSummary } from "@/src/utils/mappers/yacht";
 
-const YACHTS = getYachtSummaries().slice(0, 6);
+async function getFeaturedYachts() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/yachts/active`,
+      {
+        next: { revalidate: 60 },
+      },
+    );
 
-const FeaturedYachtsSection = () => {
+    if (!res.ok) return [];
+
+    const body: ApiResponse<YachtAdminItem[]> = await res.json();
+    return (body.data ?? []).slice(0, 6).map(mapYachtAdminItemToSummary);
+  } catch {
+    return [];
+  }
+}
+
+const FeaturedYachtsSection = async () => {
+  const YACHTS = await getFeaturedYachts();
+
+  if (YACHTS.length === 0) return null;
+
   return (
     <section className="bg-white pt-32 pb-16 md:pt-40 md:pb-24">
       <div className="container">
@@ -28,13 +50,13 @@ const FeaturedYachtsSection = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {YACHTS.map((yacht) => (
+          {YACHTS?.map((yacht) => (
             <Link
               key={yacht.slug}
               href={`/yachts/${yacht.slug}`}
               className="group overflow-hidden rounded-2xl border border-brand-900/10 bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-4/3 overflow-hidden">
                 <Image
                   src={yacht.image}
                   alt={yacht.name}

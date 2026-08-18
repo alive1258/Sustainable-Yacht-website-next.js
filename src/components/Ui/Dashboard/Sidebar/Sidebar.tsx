@@ -195,6 +195,12 @@ const MENU_ITEMS: MenuItem[] = [
         menuKey: "destinations",
       },
       {
+        label: "Experiences",
+        href: "/dashboard/experiences/all-experiences",
+        icon: Compass,
+        menuKey: "experiences",
+      },
+      {
         label: "About Section",
         href: "/dashboard/about/all-about",
         icon: UserRound,

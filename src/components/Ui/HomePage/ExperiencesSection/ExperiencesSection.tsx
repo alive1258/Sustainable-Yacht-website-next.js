@@ -1,42 +1,30 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import type { ApiResponse } from "@/src/types/axios";
+import type { ExperienceItem } from "@/src/types/experienceType";
 
-const EXPERIENCES = [
-  {
-    title: "Water Sports & Adventure",
-    description: "Jet skis, tenders, and on-water thrills off the swim deck.",
-    image: "/images/experiences/exp-jetski-tender.jpg",
-  },
-  {
-    title: "Tropical Escapes",
-    description: "Island-hop through hidden coves and reef-fringed anchorages.",
-    image: "/images/experiences/exp-efoil.jpg",
-  },
-  {
-    title: "Dubai Luxury Excursions",
-    description: "Marina skylines, gourmet dining, and desert-meets-sea style.",
-    image: "/images/experiences/exp-dubai-watersports.jpeg",
-  },
-  {
-    title: "Marina & Coastal Living",
-    description: "Wake up in the world's most photogenic harbors.",
-    image: "/images/experiences/exp-marina.jpg",
-  },
+async function getActiveExperiences(): Promise<ExperienceItem[]> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/experiences/active`,
+      { next: { revalidate: 60 } },
+    );
 
-  {
-    title: "Cultural Voyages",
-    description: "Coastal towns, local markets, and centuries of history.",
-    image: "/images/experiences/cultural-voyages.jpg",
-  },
-  {
-    title: "Adventure & Nature",
-    description: "Diving, wildlife encounters, and untouched coastlines.",
-    image: "/images/experiences/adventure-nature.jpg",
-  },
-];
+    if (!res.ok) return [];
 
-const ExperiencesSection = () => {
+    const body: ApiResponse<ExperienceItem[]> = await res.json();
+    return body.data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+const ExperiencesSection = async () => {
+  const experiences = await getActiveExperiences();
+
+  if (experiences.length === 0) return null;
+
   return (
     <section className="bg-brand-50/50 py-16 md:py-24">
       <div className="container">
@@ -59,25 +47,29 @@ const ExperiencesSection = () => {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {EXPERIENCES.map(({ title, description, image }) => (
+          {experiences.map(({ id, title, description, image }) => (
             <div
-              key={title}
+              key={id}
               className="group overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative aspect-4/3 overflow-hidden">
-                <Image
-                  src={image}
-                  alt={title}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className=" transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
+              {image && (
+                <div className="relative aspect-4/3 overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className=" transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              )}
               <div className="p-6">
                 <h3 className="text-lg font-bold text-brand-900">{title}</h3>
-                <p className="mt-2 text-sm text-brand-900/60 leading-relaxed">
-                  {description}
-                </p>
+                {description && (
+                  <p className="mt-2 text-sm text-brand-900/60 leading-relaxed">
+                    {description}
+                  </p>
+                )}
               </div>
             </div>
           ))}
