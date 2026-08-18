@@ -11,7 +11,6 @@ import {
   Lock,
   Mail,
   ChevronLeft,
-  ShieldCheck,
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
@@ -21,6 +20,7 @@ import { storeOTPData } from "@/src/redux/features/otpSlice";
 import { ApiError } from "@/src/types/authType";
 import CommonModal from "../CommonModal/CommonModal";
 import VerifyOtp from "../Otp/VerifyOtp";
+import Logo from "@/src/components/Shared/Logo/Logo";
 
 type LoginFormValues = {
   email: string;
@@ -84,11 +84,8 @@ const Login = () => {
 
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           {/* Logo / Brand Name */}
-          <div className="flex justify-center items-center gap-2 text-emerald-600">
-            <ShieldCheck className="h-10 w-10" />
-            <span className="text-3xl font-extrabold tracking-tight text-slate-950">
-              Medico<span className="text-emerald-500">.</span>
-            </span>
+          <div className="flex justify-center">
+            <Logo variant="dark" size="lg" />
           </div>
           <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-slate-800">
             Sign in to your account
@@ -99,7 +96,7 @@ const Login = () => {
               href="/signup"
               className="font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
             >
-              create a new pharmacy account
+              create a new account
             </Link>
           </p>
         </div>

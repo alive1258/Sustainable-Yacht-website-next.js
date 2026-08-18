@@ -12,7 +12,6 @@ import {
   Eye,
   EyeOff,
   UserPlus,
-  ShieldCheck,
   MapPin,
   ChevronLeft,
   ArrowRight,
@@ -23,6 +22,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useCreateUserMutation } from "@/src/redux/api/usersApi";
 import { storeOTPData } from "@/src/redux/features/otpSlice";
 import { ApiError } from "@/src/types/authType";
+import Logo from "@/src/components/Shared/Logo/Logo";
 import CommonModal from "../CommonModal/CommonModal";
 import VerifyOtp from "../Otp/VerifyOtp";
 
@@ -103,11 +103,8 @@ const SignUp = () => {
 
         <div className="sm:mx-auto sm:w-full sm:max-w-xl">
           {/* Logo / Brand Name */}
-          <div className="flex justify-center items-center gap-2 text-emerald-600">
-            <ShieldCheck className="h-10 w-10" />
-            <span className="text-3xl font-extrabold tracking-tight text-slate-950">
-              Medico<span className="text-emerald-500">.</span>
-            </span>
+          <div className="flex justify-center">
+            <Logo variant="dark" size="lg" />
           </div>
           <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-slate-800">
             Create your account

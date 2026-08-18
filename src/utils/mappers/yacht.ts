@@ -14,6 +14,7 @@ function formatPrice(amount: number | string, currency: string): string {
 
 export function mapYachtAdminItemToYacht(item: YachtAdminItem): Yacht {
   return {
+    id: item.id,
     slug: item.slug,
     name: item.name,
     tagline: item.tagline,
@@ -25,6 +26,8 @@ export function mapYachtAdminItemToYacht(item: YachtAdminItem): Yacht {
     crew: item.crew,
     priceFrom: formatPrice(item.price_per_night, item.currency),
     priceUnit: item.price_unit,
+    pricePerNight: toNumber(item.price_per_night),
+    currency: item.currency,
     heroImage: item.hero_image,
     gallery: item.gallery,
     description: item.description,

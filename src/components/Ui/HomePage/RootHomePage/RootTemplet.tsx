@@ -4,6 +4,7 @@ import DestinationsSectionSkeleton from "../DestinationsSection/DestinationsSect
 import ExperiencesSection from "../ExperiencesSection/ExperiencesSection";
 import ExperiencesSectionSkeleton from "../ExperiencesSection/ExperiencesSectionSkeleton";
 import FaqSection from "../FaqSection/FaqSection";
+import FaqSectionSkeleton from "../FaqSection/FaqSectionSkeleton";
 import FeaturedYachtsSection from "../FeaturedYachtsSection/FeaturedYachtsSection";
 import FeaturedYachtsSectionSkeleton from "../FeaturedYachtsSection/FeaturedYachtsSectionSkeleton";
 import HeroSection from "../HeroSection/HeroSection";
@@ -60,7 +61,9 @@ const RootHomePage = () => {
         <TestimonialsSection />
       </Suspense>
 
-      <FaqSection />
+      <Suspense fallback={<FaqSectionSkeleton />}>
+        <FaqSection />
+      </Suspense>
 
       <div id="insights" className="scroll-mt-[100px]">
         <InsightsSection />

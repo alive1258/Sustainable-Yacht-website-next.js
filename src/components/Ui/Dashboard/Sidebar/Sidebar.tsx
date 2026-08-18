@@ -10,6 +10,7 @@ import {
   Clapperboard,
   ChevronDown,
   Compass,
+  CreditCard,
   FileText,
   GalleryHorizontal,
   Gem,
@@ -75,6 +76,25 @@ const MENU_ITEMS: MenuItem[] = [
     href: "/dashboard/yachts/all-yachts",
     icon: Ship,
     menuKey: "yachts",
+  },
+  {
+    // Self-service booking history — visible to any authenticated user,
+    // not admin-gated (no menuKey), same treatment as Account below.
+    label: "My Bookings",
+    href: "/dashboard/bookings",
+    icon: CalendarDays,
+  },
+  {
+    label: "Bookings",
+    href: "/dashboard/bookings/all-bookings",
+    icon: CalendarDays,
+    menuKey: "bookings",
+  },
+  {
+    label: "Payments",
+    href: "/dashboard/payments/all-payments",
+    icon: CreditCard,
+    menuKey: "payments",
   },
   {
     label: "Video Gallary",

@@ -37,6 +37,7 @@ function buildYacht(input: YachtInput): Yacht {
   const convertible = Math.max(input.cabins - doubles - twins, 0);
 
   return {
+    id: input.slug,
     slug: input.slug,
     name: input.name,
     tagline: input.tagline,
@@ -48,6 +49,8 @@ function buildYacht(input: YachtInput): Yacht {
     crew: input.crew,
     priceFrom: usd(input.priceNight),
     priceUnit: "per night",
+    pricePerNight: input.priceNight,
+    currency: "USD",
     heroImage: input.heroImage,
     gallery: input.gallery,
     description: input.description,
