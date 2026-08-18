@@ -3,51 +3,67 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import {
   ArrowRight,
   CalendarDays,
-  CheckCircle2,
   CreditCard,
-  Landmark,
   Lock,
   Users,
-  Wallet,
   X,
 } from "lucide-react";
-
-const PAYMENT_METHODS = [
-  { id: "card", label: "Card", icon: CreditCard },
-  { id: "paypal", label: "PayPal", icon: Wallet },
-  { id: "bank", label: "Bank Transfer", icon: Landmark },
-] as const;
-
-type PaymentMethodId = (typeof PAYMENT_METHODS)[number]["id"];
+import { useAppSelector } from "@/src/redux/hooks";
+import { useCreateBookingMutation } from "@/src/redux/api/bookingApi";
+import { useCreateCheckoutSessionMutation } from "@/src/redux/api/paymentApi";
+import type { ApiError } from "@/src/types/authType";
 
 interface BookingModalProps {
+  yachtId: string;
+  yachtSlug: string;
   yachtName: string;
   heroImage: string;
   priceFrom: string;
   priceUnit: string;
+  pricePerNight: number;
+  currency: string;
+  maxGuests: number;
   triggerLabel?: string;
   triggerClassName: string;
 }
 
-// TODO: no backend/payment gateway yet — submitting only shows a
-// confirmation state. Wire this up to a real booking/CRM + deposit
-// invoicing flow once one exists.
+function nightsBetween(checkIn: string, checkOut: string): number {
+  if (!checkIn || !checkOut) return 0;
+  const ms = new Date(checkOut).getTime() - new Date(checkIn).getTime();
+  return Math.max(0, Math.round(ms / 86_400_000));
+}
+
 const BookingModal = ({
+  yachtId,
+  yachtSlug,
   yachtName,
   heroImage,
   priceFrom,
   priceUnit,
-  triggerLabel = "Send an Inquiry",
+  pricePerNight,
+  currency,
+  maxGuests,
+  triggerLabel = "Book This Yacht",
   triggerClassName,
 }: BookingModalProps) => {
+  const user = useAppSelector((state) => state.auth.user);
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodId>("card");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState(2);
+  const [message, setMessage] = useState("");
 
-  /* lock background scroll while the modal is open */
+  const [createBooking, { isLoading: isBooking }] = useCreateBookingMutation();
+  const [createCheckoutSession, { isLoading: isRedirecting }] =
+    useCreateCheckoutSessionMutation();
+  const isSubmitting = isBooking || isRedirecting;
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -56,14 +72,40 @@ const BookingModal = ({
   }, [isOpen]);
 
   const close = () => {
+    if (isSubmitting) return;
     setIsOpen(false);
-    setSubmitted(false);
-    setPaymentMethod("card");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const nights = nightsBetween(checkIn, checkOut);
+  const subtotal = nights * pricePerNight;
+  const deposit = subtotal * 0.3;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    try {
+      const bookingRes = await createBooking({
+        yacht_id: yachtId,
+        check_in: checkIn,
+        check_out: checkOut,
+        guests,
+        message: message || undefined,
+      }).unwrap();
+
+      const session = await createCheckoutSession({
+        booking_id: bookingRes.data.id,
+        type: "deposit",
+      }).unwrap();
+
+      window.location.assign(session.data.url);
+    } catch (err) {
+      const apiError = err as ApiError;
+      toast.error(
+        apiError?.data?.message ||
+          apiError?.message ||
+          "Could not start your booking. Please try again.",
+      );
+    }
   };
 
   return (
@@ -94,13 +136,7 @@ const BookingModal = ({
 
               {/* IMAGE SIDE */}
               <div className="relative hidden min-h-[220px] md:block">
-                <Image
-                  src={heroImage}
-                  alt={yachtName}
-                  fill
-                  sizes="50vw"
-                  className=""
-                />
+                <Image src={heroImage} alt={yachtName} fill sizes="50vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-900/70 via-brand-900/10 to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white">
                   <p className="text-xs font-semibold uppercase tracking-widest text-white/70">
@@ -112,23 +148,29 @@ const BookingModal = ({
 
               {/* FORM SIDE */}
               <div className="p-6 sm:p-8">
-                {submitted ? (
+                {!user ? (
                   <div className="flex flex-col items-center justify-center gap-3 py-10 text-center">
-                    <CheckCircle2 size={32} className="text-brand-600" />
+                    <Lock size={28} className="text-brand-600" />
                     <h3 className="text-lg font-bold text-brand-900">
-                      Inquiry Sent
+                      Log In to Book {yachtName}
                     </h3>
                     <p className="max-w-xs text-sm text-brand-900/60">
-                      A charter specialist will confirm availability for{" "}
-                      {yachtName} and follow up with deposit details within one
-                      business day.
+                      Booking history and payment receipts live on your
+                      account, so we need you signed in first.
                     </p>
                     <button
                       type="button"
-                      onClick={close}
-                      className="mt-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700"
+                      onClick={() => {
+                        sessionStorage.setItem(
+                          "redirectAfterLogin",
+                          `/yachts/${yachtSlug}`,
+                        );
+                        router.push("/login");
+                      }}
+                      className="mt-2 inline-flex items-center gap-2 rounded-lg bg-gold-500 px-5 py-2.5 text-sm font-semibold text-brand-900 transition hover:bg-gold-400"
                     >
-                      Done
+                      Log In / Sign Up
+                      <ArrowRight size={16} />
                     </button>
                   </div>
                 ) : (
@@ -143,29 +185,6 @@ const BookingModal = ({
                     <form onSubmit={handleSubmit} className="mt-5 space-y-4">
                       <div className="grid gap-4 sm:grid-cols-2">
                         <label className="block">
-                          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                            Full Name
-                          </span>
-                          <input
-                            type="text"
-                            required
-                            className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                          />
-                        </label>
-                        <label className="block">
-                          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                            Email
-                          </span>
-                          <input
-                            type="email"
-                            required
-                            className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                          />
-                        </label>
-                      </div>
-
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <label className="block">
                           <span className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-brand-900/60">
                             <CalendarDays size={13} />
                             Check-In
@@ -173,6 +192,9 @@ const BookingModal = ({
                           <input
                             type="date"
                             required
+                            min={new Date().toISOString().slice(0, 10)}
+                            value={checkIn}
+                            onChange={(e) => setCheckIn(e.target.value)}
                             className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
                           />
                         </label>
@@ -184,6 +206,9 @@ const BookingModal = ({
                           <input
                             type="date"
                             required
+                            min={checkIn || new Date().toISOString().slice(0, 10)}
+                            value={checkOut}
+                            onChange={(e) => setCheckOut(e.target.value)}
                             className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
                           />
                         </label>
@@ -197,9 +222,15 @@ const BookingModal = ({
                         <input
                           type="number"
                           min={1}
+                          max={maxGuests}
                           required
+                          value={guests}
+                          onChange={(e) => setGuests(Number(e.target.value))}
                           className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
                         />
+                        <span className="mt-1 block text-xs text-brand-900/40">
+                          This yacht sleeps up to {maxGuests} guests.
+                        </span>
                       </label>
 
                       <label className="block">
@@ -208,124 +239,12 @@ const BookingModal = ({
                         </span>
                         <textarea
                           rows={3}
+                          value={message}
+                          onChange={(e) => setMessage(e.target.value)}
                           placeholder="Anything else we should know?"
                           className="w-full resize-none rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
                         />
                       </label>
-
-                      {/* PAYMENT METHOD */}
-                      <div>
-                        <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                          Payment Method
-                        </span>
-                        <div className="grid grid-cols-3 gap-2">
-                          {PAYMENT_METHODS.map((method) => (
-                            <button
-                              key={method.id}
-                              type="button"
-                              onClick={() => setPaymentMethod(method.id)}
-                              className={`flex flex-col items-center gap-1.5 rounded-lg border px-3 py-2.5 text-xs font-semibold transition ${
-                                paymentMethod === method.id
-                                  ? "border-brand-600 bg-brand-50 text-brand-700"
-                                  : "border-brand-900/10 text-brand-900/60 hover:border-brand-900/20"
-                              }`}
-                            >
-                              <method.icon size={16} />
-                              {method.label}
-                            </button>
-                          ))}
-                        </div>
-
-                        {paymentMethod === "card" && (
-                          <div className="mt-4 space-y-4">
-                            <label className="block">
-                              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                                Name on Card
-                              </span>
-                              <input
-                                type="text"
-                                required
-                                autoComplete="cc-name"
-                                className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                              />
-                            </label>
-
-                            <label className="block">
-                              <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                                Card Number
-                              </span>
-                              <div className="relative">
-                                <CreditCard
-                                  size={15}
-                                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-brand-900/40"
-                                />
-                                <input
-                                  type="text"
-                                  required
-                                  inputMode="numeric"
-                                  autoComplete="cc-number"
-                                  placeholder="1234 1234 1234 1234"
-                                  maxLength={19}
-                                  className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 py-2.5 pl-9 pr-3 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                                />
-                              </div>
-                            </label>
-
-                            <div className="grid grid-cols-2 gap-4">
-                              <label className="block">
-                                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                                  Expiry
-                                </span>
-                                <input
-                                  type="text"
-                                  required
-                                  inputMode="numeric"
-                                  autoComplete="cc-exp"
-                                  placeholder="MM/YY"
-                                  maxLength={5}
-                                  className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                                />
-                              </label>
-                              <label className="block">
-                                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-brand-900/60">
-                                  CVC
-                                </span>
-                                <input
-                                  type="text"
-                                  required
-                                  inputMode="numeric"
-                                  autoComplete="cc-csc"
-                                  placeholder="CVC"
-                                  maxLength={4}
-                                  className="w-full rounded-lg border border-brand-900/10 bg-brand-50/50 px-3 py-2.5 text-sm text-brand-900 focus:border-brand-500 focus:outline-none"
-                                />
-                              </label>
-                            </div>
-
-                            <p className="flex items-center gap-1.5 text-[11px] text-brand-900/50">
-                              <Lock size={11} className="shrink-0" />
-                              Preview only — card details are never
-                              transmitted or stored. Secure Stripe checkout
-                              is coming soon.
-                            </p>
-                          </div>
-                        )}
-
-                        {paymentMethod === "paypal" && (
-                          <div className="mt-4 rounded-lg border border-brand-900/10 bg-brand-50/50 p-4 text-sm text-brand-900/60">
-                            You&apos;ll be redirected to PayPal to complete
-                            payment securely once online payment is enabled.
-                          </div>
-                        )}
-
-                        {paymentMethod === "bank" && (
-                          <div className="mt-4 rounded-lg border border-brand-900/10 bg-brand-50/50 p-4 text-sm text-brand-900/60">
-                            Bank transfer instructions are included in your
-                            deposit invoice after our team confirms
-                            availability.
-                          </div>
-                        )}
-                      </div>
 
                       {/* DEPOSIT & PAYMENT SUMMARY */}
                       <div className="rounded-xl border border-brand-900/10 bg-brand-50/50 p-4">
@@ -335,42 +254,52 @@ const BookingModal = ({
                         </div>
                         <div className="mt-3 space-y-2 text-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-brand-900/60">
-                              Charter Rate
-                            </span>
+                            <span className="text-brand-900/60">Charter Rate</span>
                             <span className="font-semibold text-brand-900">
                               {priceFrom} {priceUnit}
                             </span>
                           </div>
+                          {nights > 0 && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-brand-900/60">
+                                {nights} {nights === 1 ? "night" : "nights"}
+                              </span>
+                              <span className="font-semibold text-brand-900">
+                                {currency} {subtotal.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
                           <div className="flex items-center justify-between">
                             <span className="text-brand-900/60">
-                              Deposit to Confirm
+                              Deposit to Confirm (30%)
                             </span>
                             <span className="font-semibold text-brand-900">
-                              30% — invoiced after inquiry
+                              {nights > 0
+                                ? `${currency} ${deposit.toLocaleString()}`
+                                : "Select your dates"}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-brand-900/60">
-                              Balance Due
-                            </span>
+                            <span className="text-brand-900/60">Balance Due</span>
                             <span className="font-semibold text-brand-900">
                               Before departure
                             </span>
                           </div>
                         </div>
-                        <p className="mt-3 text-[11px] leading-relaxed text-brand-900/50">
-                          No payment is collected here. Submitting sends a
-                          booking request — our team confirms availability and
-                          sends a secure deposit invoice separately.
+                        <p className="mt-3 flex items-center gap-1.5 text-[11px] leading-relaxed text-brand-900/50">
+                          <Lock size={11} className="shrink-0" />
+                          You&apos;ll pay the deposit securely on Stripe&apos;s
+                          checkout page — we never see or store your card
+                          details.
                         </p>
                       </div>
 
                       <button
                         type="submit"
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-gold-400"
+                        disabled={isSubmitting || nights < 1}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-gold-400 disabled:cursor-not-allowed disabled:opacity-60"
                       >
-                        Confirm Booking Request
+                        {isSubmitting ? "Redirecting to Payment…" : "Continue to Secure Payment"}
                         <ArrowRight size={16} />
                       </button>
                     </form>

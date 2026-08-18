@@ -12,10 +12,15 @@ const YachtCta = ({ yacht }: { yacht: Yacht }) => (
         confirm availability and build your itinerary.
       </p>
       <BookingModal
+        yachtId={yacht.id}
+        yachtSlug={yacht.slug}
         yachtName={yacht.name}
         heroImage={yacht.heroImage}
         priceFrom={yacht.priceFrom}
         priceUnit={yacht.priceUnit}
+        pricePerNight={yacht.pricePerNight}
+        currency={yacht.currency}
+        maxGuests={yacht.guests}
         triggerClassName="inline-flex items-center gap-2 rounded-lg bg-gold-500 px-6 py-3 text-sm font-semibold text-brand-900 transition hover:bg-gold-400"
       />
     </div>

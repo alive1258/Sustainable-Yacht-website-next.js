@@ -48,6 +48,7 @@ export interface YachtRate {
 }
 
 export interface Yacht {
+  id: string;
   slug: string;
   name: string;
   tagline: string;
@@ -59,6 +60,8 @@ export interface Yacht {
   crew: number;
   priceFrom: string;
   priceUnit: string;
+  pricePerNight: number;
+  currency: string;
   heroImage: string;
   gallery: string[];
   description: string[];
