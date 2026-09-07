@@ -2,16 +2,35 @@
 
 A production-grade web platform for a sustainable yacht charter business, built with **Next.js 16 (App Router)**, **React 19**, and **TypeScript**. The project ships a full public-facing marketing/booking site — with **Stripe-powered checkout** and a **Socket.IO real-time support chat** — alongside a self-service **admin dashboard (CMS)** that lets non-technical staff manage every piece of content and run live customer support, without touching code.
 
+<p align="center">
+  <strong>🌐 Live Website:</strong><br/>
+  <a href="https://sustainable-yacht-website.vercel.app/" target="_blank">
+    <code>https://sustainable-yacht-website.vercel.app/</code>
+  </a>
+</p>
+
+<p align="center">
+  <strong>🔗 API Base URL:</strong><br/>
+  <code>https://yachts-backned-nest-js.onrender.com/api/v1</code>
+</p>
+
+<p align="center">
+  <strong>📚 Swagger API Documentation:</strong><br/>
+  <a href="https://yachts-backned-nest-js.onrender.com/api/v1/swagger" target="_blank">
+    <code>https://yachts-backned-nest-js.onrender.com/api/v1/swagger</code>
+  </a>
+</p>
+
 ---
 
 ## Overview
 
-| | |
-|---|---|
-| **Type** | Full-stack frontend (Next.js) consuming a REST API |
-| **Audience** | Public marketing/booking site + internal content-management dashboard |
-| **Stack** | Next.js 16, React 19, TypeScript, Tailwind CSS 4, Redux Toolkit |
-| **Rendering** | App Router with route groups for layout separation |
+|               |                                                                       |
+| ------------- | --------------------------------------------------------------------- |
+| **Type**      | Full-stack frontend (Next.js) consuming a REST API                    |
+| **Audience**  | Public marketing/booking site + internal content-management dashboard |
+| **Stack**     | Next.js 16, React 19, TypeScript, Tailwind CSS 4, Redux Toolkit       |
+| **Rendering** | App Router with route groups for layout separation                    |
 
 The codebase is organized into two clearly separated experiences under a single Next.js App Router instance:
 
@@ -25,11 +44,13 @@ This route-group pattern keeps public and authenticated experiences on independe
 ## Tech Stack
 
 **Core**
+
 - [Next.js 16](https://nextjs.org/) — App Router, file-based routing, image optimization, server/client component split
 - [React 19](https://react.dev/)
 - [TypeScript 5](https://www.typescriptlang.org/) — strict typing across pages, components, hooks, and API layer
 
 **State & Data**
+
 - [Redux Toolkit](https://redux-toolkit.js.org/) + `react-redux` — global state, RTK Query API slices
 - `redux-persist` — persisted client state (e.g. auth session)
 - [Axios](https://axios-http.com/) — typed HTTP client / API service layer
@@ -37,10 +58,12 @@ This route-group pattern keeps public and authenticated experiences on independe
 - `jwt-decode` — client-side token inspection
 
 **Payments & Real-Time**
+
 - [Stripe Checkout](https://stripe.com/) — redirect-based deposit/balance payment flow (no card data touches the client)
 - [Socket.IO Client](https://socket.io/) — persistent WebSocket connection (`/chat` namespace) powering the live support chat widget and staff inbox, with typing indicators, read receipts, and presence
 
 **UI & Forms**
+
 - [Tailwind CSS 4](https://tailwindcss.com/) — utility-first styling
 - [react-hook-form](https://react-hook-form.com/) — form state and validation
 - [react-datepicker](https://reactdatepicker.com/), `react-paginate`, `lucide-react`, `react-icons`
@@ -49,6 +72,7 @@ This route-group pattern keeps public and authenticated experiences on independe
 - `html2canvas` + `jspdf` — client-side document/PDF export (e.g. prescriptions)
 
 **Tooling**
+
 - ESLint 9 (flat config) with `eslint-config-next`
 - `date-fns` for date formatting/manipulation
 
@@ -113,6 +137,7 @@ Each CMS module under `dashboard/` follows a consistent **add / all / edit** pat
 ## Booking, Payments & Real-Time Chat
 
 **Booking & Stripe Checkout**
+
 1. A guest submits a booking request for a yacht and date range from the public site; the API rejects overlapping or over-capacity requests before any payment is attempted.
 2. The client calls the payments API to open a **Stripe Checkout Session** for the 30% deposit and redirects the browser to Stripe — no card data is ever handled directly by this app.
 3. Stripe redirects back to `/booking/confirmation` or `/booking/cancelled` depending on the outcome; the booking's real status is only ever set server-side via a signature-verified Stripe webhook, not by the redirect itself.
@@ -120,6 +145,7 @@ Each CMS module under `dashboard/` follows a consistent **add / all / edit** pat
 5. Once the deposit clears, the customer can pay the remaining balance through the same Checkout flow.
 
 **Real-Time Chat**
+
 - `useChatSocket` (`src/hooks/useChatSocket.ts`) owns a single `socket.io-client` connection to the backend's `/chat` namespace, authenticated via the existing HTTP-only session cookie (`withCredentials: true`) — no extra login step for chat.
 - **Customers** get one persistent thread, surfaced through the floating `MessageWidget` on the public site. **Staff** get a live inbox (`dashboard/support-chat`) of every open conversation, gated by the same role/permission system used elsewhere in the dashboard.
 - The hook merges REST-fetched message history (for reload/reconnect) with live socket events (`message:new`, `typing`, `conversation:read`, `conversation:updated`) so the UI never shows stale or duplicate messages, and tracks per-thread unread counts locally.
@@ -129,6 +155,7 @@ Each CMS module under `dashboard/` follows a consistent **add / all / edit** pat
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18.18+ (recommended: latest LTS)
 - npm (project is committed with `package-lock.json`)
 - A running instance of the backend API
